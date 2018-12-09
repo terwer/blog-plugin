@@ -28,10 +28,17 @@ public class BlogController {
         return "themes/default/index";
     }
 
-    @RequestMapping("post")
+    @RequestMapping("/post")
     public String post(Model model) {
         SiteConfig siteConfig = commonService.getSiteConfig();
         model.addAttribute("siteConfig",siteConfig);
         return "themes/default/post";
+    }
+
+    @RequestMapping("/essay")
+    public String essay(Model model) {
+        SiteConfig siteConfig = commonService.getSiteConfig();
+        model.addAttribute("siteConfig",siteConfig);
+        return "themes/default/essay";
     }
 }

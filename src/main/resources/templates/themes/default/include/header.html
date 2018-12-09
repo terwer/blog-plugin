@@ -30,7 +30,7 @@
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:inline="javascript">
         //设置项目根路径
-        window.BUGUCMS_BASE_URL = /*[[@{/}]]*/'/';
+        window.BUGUCMS_BASE_URL = 'http://www.terwergreen.com/';/*[[@{/}]]*/'/';
         window.BLOG_BASE_URL = /*[[@{/blog/}]]*/'/blog/';
         window.BLOG_THEME_PATH = /*[[@{|/blog/templates/themes/${siteConfig.webtheme}/|}]]*/'/blog/templates/themes/default/';
     </script>
@@ -67,13 +67,8 @@
                             <ul id="menu-nav" class="nav__list">
                                 <li id="menu-item-4" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-4">
                                     <a th:href="@{/}"><i class="fa fa-home"></i><span class="fontawesome-text"> 首页</span></a></li>
-                                <li id="menu-item-7" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-7">
-                                    <a th:href="@{/blog}"><i class="fa fa-file-text"></i><span class="fontawesome-text"> 文章</span></a>
-                                    <ul class="sub-menu">
-                                        <li id="menu-item-225" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-225"><a href="#">文章默认模板</a></li>
-                                        <li id="menu-item-223" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-223"><a href="#">文章模板01</a></li>
-                                        <li id="menu-item-224" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-224"><a href="#">文章模板02</a></li>
-                                    </ul>
+                                <li id="menu-item-7" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7">
+                                    <a th:href="@{/blog/essay}"><i class="fa fa-file-text"></i><span class="fontawesome-text"> 随笔</span></a>
                                 </li>
                                 <li id="menu-item-245" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-245">
                                     <a href="#"><i class="fa fa-file"></i><span class="fontawesome-text"> 页面</span></a>
@@ -121,13 +116,8 @@
                     <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-4">
                         <a th:href="@{/}"><i class="fa fa-home"></i><span class="fontawesome-text"> 首页</span></a>
                     </li>
-                    <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-7">
-                        <a th:href="@{/blog}"><i class="fa fa-file-text"></i><span class="fontawesome-text"> 文章</span></a>
-                        <ul class="sub-menu">
-                            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-225"><a href="#">文章默认模板</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-223"><a href="#">文章模板01</a></li>
-                            <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-224"><a href="#">文章模板02</a></li>
-                        </ul>
+                    <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7">
+                        <a th:href="@{/blog/essay}"><i class="fa fa-file-text"></i><span class="fontawesome-text"> 随笔</span></a>
                     </li>
                     <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-245">
                         <a href="#"><i class="fa fa-file"></i><span class="fontawesome-text"> 页面</span></a>
