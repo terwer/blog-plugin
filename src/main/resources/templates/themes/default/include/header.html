@@ -1,0 +1,31 @@
+<!--
+  _______
+ |__   __|
+    | |  ___  _ __ __      __ ___  _ __
+    | | / _ \| '__|\ \ /\ / // _ \| '__|
+    | ||  __/| |    \ V  V /|  __/| |
+    |_| \___||_|     \_/\_/  \___||_|
+-->
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonHeaderCustom(title,styles)">
+    <title th:text="${title}"></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" th:content="${siteConfig.keywords}">
+    <meta name="description" th:content="${siteConfig.description}">
+    <link rel="icon" type="image/x-icon" th:href="@{/static/favicon.ico}">
+    <script type="text/javascript" th:inline="javascript">
+        //设置项目根路径
+        window.BLOG_BASE_URL = /*[[@{/blog}]]*/'/blog';
+        window.BLOG_THEME_PATH = /*[[@{|/blog/templates/themes/${siteConfig.webtheme}/|}]]*/'/blog/templates/themes/default/';
+    </script>
+    <style type="text/css">
+    </style>
+    <th:block th:replace="${styles}"/>
+</head>
+<body>
+<header th:fragment="commonHeaderContent">
+</header>
+</body>
+</html>

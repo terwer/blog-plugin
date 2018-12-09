@@ -1,10 +1,24 @@
+<!--
+  _______
+ |__   __|
+    | |  ___  _ __ __      __ ___  _ __
+    | | / _ \| '__|\ \ /\ / // _ \| '__|
+    | ||  __/| |    \ V  V /|  __/| |
+    |_| \___||_|     \_/\_/  \___||_|
+-->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:include="themes/default/include/header::commonHeaderCustom(${siteConfig.webname} + ' - ' + ${siteConfig.webslogen},~{::style})">
+    <style type="text/css">
+    </style>
 </head>
 <body>
-Blog index
+
+<div th:include="themes/default/include/header::commonHeaderContent"></div>
+
+<div th:include="themes/default/include/footer::commonFooterCustom(~{::script})">
+    <script type="text/javascript">
+    </script>
+</div>
 </body>
 </html>

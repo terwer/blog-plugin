@@ -1,0 +1,49 @@
+<!--
+  _______
+ |__   __|
+    | |  ___  _ __ __      __ ___  _ __
+    | | / _ \| '__|\ \ /\ / // _ \| '__|
+    | ||  __/| |    \ V  V /|  __/| |
+    |_| \___||_|     \_/\_/  \___||_|
+-->
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="commonFooterCustom(scripts)">
+    <div>
+        <p>
+            <a href="http://www.terwergreen.com/" th:href="@{/}" target="_blank">
+                <span th:text="${siteConfig.webname}">webname</span>
+            </a>
+            <span id="currentYear">2018</span> &copy;
+            <a th:href="${siteConfig.weburl}" target="_blank" th:text="${siteConfig.domain}">domain</a>保留所有权益
+        </p>
+        <a target="_blank" href="http://www.miitbeian.gov.cn/">
+            <span th:text="${siteConfig.beianinfo}"></span>
+        </a>
+        <!--  cnzz数据统计 -->
+        <!-- <script type="text/javascript">
+            var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cspan id='cnzz_stat_icon_4445524'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/stat.php%3Fid%3D4445524%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+        </script> -->
+        <span id="cnzz_stat_icon_4445524">
+            <a href="http://www.cnzz.com/stat/website.php?web_id=4445524" target="_blank" title="站长统计">
+                <img border="0" hspace="0" vspace="0" src="http://icon.cnzz.com/img/pic.gif">
+            </a>
+        </span>
+        <!-- 改为异步代码，防止警告 -->
+        <script type="text/javascript">
+            var cnzz_s_tag = document.createElement('script');
+            cnzz_s_tag.type = 'text/javascript';
+            cnzz_s_tag.async = true;
+            cnzz_s_tag.charset = 'utf-8';
+            cnzz_s_tag.src = 'https://w.cnzz.com/c.php?id=4445524&async=1';
+            var root_s = document.getElementsByTagName('script')[0];
+            root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+        </script>
+    </div>
+
+    <th:block th:replace="${scripts}"/>
+</div>
+</body>
+</html>

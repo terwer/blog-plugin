@@ -1,6 +1,10 @@
 package com.terwergreen.plugins.blog.front;
 
+import com.terwergreen.core.CommonService;
+import com.terwergreen.pojo.SiteConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -14,8 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("blog")
 public class BlogController {
 
+    @Autowired
+    private CommonService commonService;
+
     @RequestMapping
-    public String blog() {
+    public String blog(Model model) {
+        SiteConfig siteConfig = commonService.getSiteConfig();
+        model.addAttribute("siteConfig",siteConfig);
         return "themes/default/index";
     }
 }
