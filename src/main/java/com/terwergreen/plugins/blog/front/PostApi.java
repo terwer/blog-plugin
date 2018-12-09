@@ -13,9 +13,13 @@ import com.terwergreen.util.RestResponse;
 import com.terwergreen.util.RestResponseStates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,19 +37,13 @@ import static com.terwergreen.util.Constants.DEFAULT_PAGE_SIZE;
  * @version 1.0
  * 2018/7/6 10:05
  **/
-@RestController
+@Controller
 @RequestMapping("api/blog")
 public class PostApi {
     private static final Logger logger = LoggerFactory.getLogger(PostApi.class);
 
     @Resource
     private PostService postService;
-
-    @RequestMapping
-    @ResponseBody
-    public String BlogAdmin() {
-        return "blog api";
-    }
 
     @RequestMapping(value = "/post/list", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody

@@ -4,7 +4,9 @@ import com.terwergreen.plugins.PluginInterface;
 import com.terwergreen.plugins.blog.front.BlogApi;
 import com.terwergreen.plugins.blog.front.BlogController;
 import com.terwergreen.plugins.blog.front.BlogManageController;
+import com.terwergreen.plugins.blog.front.PostApi;
 import com.terwergreen.plugins.blog.service.impl.BlogServiceImpl;
+import com.terwergreen.plugins.blog.service.impl.PostServiceImpl;
 import org.pf4j.Extension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,13 +39,11 @@ public class BlogPluginExtension implements PluginInterface {
 
     private void registerBeans() {
         applicationContext.registerBean(BlogController.class);
-        logger.info("BlogPluginExtension registerBean " + BlogController.class + " in applicationContext " + applicationContext);
         applicationContext.registerBean(BlogManageController.class);
-        logger.info("BlogPluginExtension registerBean " + BlogManageController.class + " in applicationContext " + applicationContext);
         applicationContext.registerBean(BlogApi.class);
-        logger.info("BlogPluginExtension registerBean " + BlogApi.class + " in applicationContext " + applicationContext);
         applicationContext.registerBean(BlogServiceImpl.class);
-        logger.info("BlogPluginExtension registerBean " + BlogServiceImpl.class + " in applicationContext " + applicationContext);
+        applicationContext.registerBean(PostApi.class);
+        applicationContext.registerBean(PostServiceImpl.class);
     }
 
     @Override
