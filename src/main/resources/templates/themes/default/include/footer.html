@@ -10,39 +10,162 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <body>
 <footer th:fragment="commonFooterCustom(scripts)">
-    <div>
-        <p>
-            <a href="http://www.terwergreen.com/" th:href="@{/}" target="_blank">
-                <span th:text="${siteConfig.webname}">webname</span>
-            </a>
-            <span id="currentYear">2018</span> &copy;
-            <a th:href="${siteConfig.weburl}" target="_blank" th:text="${siteConfig.domain}">domain</a>保留所有权益
-        </p>
-        <a target="_blank" href="http://www.miitbeian.gov.cn/">
-            <span th:text="${siteConfig.beianinfo}"></span>
-        </a>
-        <!--  cnzz数据统计 -->
-        <!-- <script type="text/javascript">
-            var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            document.write(unescape("%3Cspan id='cnzz_stat_icon_4445524'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/stat.php%3Fid%3D4445524%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
-        </script> -->
-        <span id="cnzz_stat_icon_4445524">
-            <a href="http://www.cnzz.com/stat/website.php?web_id=4445524" target="_blank" title="站长统计">
-                <img border="0" hspace="0" vspace="0" src="http://icon.cnzz.com/img/pic.gif">
-            </a>
-        </span>
-        <!-- 改为异步代码，防止警告 -->
-        <script type="text/javascript">
-            var cnzz_s_tag = document.createElement('script');
-            cnzz_s_tag.type = 'text/javascript';
-            cnzz_s_tag.async = true;
-            cnzz_s_tag.charset = 'utf-8';
-            cnzz_s_tag.src = 'https://w.cnzz.com/c.php?id=4445524&async=1';
-            var root_s = document.getElementsByTagName('script')[0];
-            root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
-        </script>
+    <div class="footer">
+        <div class="container">
+            <div class="footertop">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="contact">
+                            <div class="footertit">
+                                <h2>联系作者</h2>
+                            </div>
+                            <div class="contactcon">
+                                <p style="line-height: 24px;">如果您有想过合作事宜，可以通过以下方式联系我们<br>
+                                    邮箱：youweics@sina.com<br>
+                                    QQ：1035136784（倚楼听雨）<br>
+                                    微信：15986685029（hiterwer）</p>
+                                <p class="copyright">
+                                    Copyright  ©   2011-2018   <a th:href="${siteConfig.weburl}" target="_blank" th:text="${siteConfig.webname}">webname</a>  · 保留所有权益
+                                </p>
+                                <p>
+                                    <a target="_blank" href="http://www.miitbeian.gov.cn/">
+                                        <span th:text="${siteConfig.beianinfo}"></span>
+                                    </a>
+                                    <!--  cnzz数据统计 -->
+                                    <!-- <script type="text/javascript">
+                                        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+                                        document.write(unescape("%3Cspan id='cnzz_stat_icon_4445524'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/stat.php%3Fid%3D4445524%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+                                    </script> -->
+                                    <span id="cnzz_stat_icon_4445524">
+                                        <a href="http://www.cnzz.com/stat/website.php?web_id=4445524" target="_blank" title="站长统计">
+                                            <img border="0" hspace="0" vspace="0" src="http://icon.cnzz.com/img/pic.gif">
+                                        </a>
+                                    </span>
+                                    <!-- 改为异步代码，防止警告 -->
+                                    <script type="text/javascript">
+                                        var cnzz_s_tag = document.createElement('script');
+                                        cnzz_s_tag.type = 'text/javascript';
+                                        cnzz_s_tag.async = true;
+                                        cnzz_s_tag.charset = 'utf-8';
+                                        cnzz_s_tag.src = 'https://w.cnzz.com/c.php?id=4445524&async=1';
+                                        var root_s = document.getElementsByTagName('script')[0];
+                                        root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
+                                    </script>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="guanzhu">
+                            <div class="footertit">
+                                <h2>关注&amp;交流</h2>
+                            </div>
+                            <div class="ewm">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p class="text-venter">技术之路，路漫漫其修远兮，吾将上下而求索。欢迎关注公众号"架构设计漫谈"，一起分享技术，探讨人生。</p>
+                                        <p></p>
+                                        <div class="ewmimg">
+                                            <img th:src="@{/blog/templates/themes/default/images/mp-qrcode.png}">
+                                            <p class="text-center">微信公众号</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="dingyue">
+                            <div class="footertit">
+                                <h2>订阅本站</h2>
+                            </div>
+                            <div class="dyform">
+                                <form class="wpm_form" method="post">
+                                    <input class="wpm_hiddenfield" name="wpm_form" type="hidden" value="1">
+                                    <p class="wpm_prepend">订阅本站获取每周更新邮件提醒，不错过任何一篇文章！</p>
+                                    <p class="wpm_email">
+                                        <label class="wpm_emaillabel" for="wpm_email">邮箱：</label>
+                                        <input class="wpm_emailinput" name="wpm_email" placeholder="请输入您的邮箱地址" type="text" value="">
+                                    </p>
+                                    <p class="wpm_submit"><input name="submit" class="btn wpm_submitbtn" type="submit" value="订阅"></p></form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="footerbottom">
+                <h2>友情链接：</h2>
+                <li><a href="http://www.terwergreen.com/" target="_blank">远方的灯塔</a></li>
+                <li><a href="http://lusongsong.com/" target="_blank">卢松松博客</a></li>
+                <li><a th:href="@{/guestbook.html}" class="fly-link">申请友链</a></li>
+            </ul>
+            <div class="livechat-girl animated">
+                <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=116817010&amp;site=terwergreen.com&amp;menu=yes" target="_blank">
+                    <img class="girl" th:src="@{/blog/templates/themes/default/images/avatar/default.png}">
+                </a>
+                <a class="livechat-hint rd-notice-tooltip rd-notice-type-success rd-notice-position-left single-line hide_hint"
+                   href="http://wpa.qq.com/msgrd?v=3&amp;uin=919985494&amp;site=xintheme.com&amp;menu=yes" target="_blank">
+                    <div class="rd-notice-content">嘿，有问题找我来帮您！</div>
+                </a>
+                <div class="animated-circles animated">
+                    <div class="circle c-1"></div>
+                    <div class="circle c-2"></div>
+                    <div class="circle c-3"></div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                (function ($) {
+                    setInterval(function () {
+                        if ($(".animated-circles").hasClass("animated")) {
+                            $(".animated-circles").removeClass("animated");
+                        } else {
+                            $(".animated-circles").addClass('animated');
+                        }
+                    }, 3000);
+                    var wait = setInterval(function () {
+                        $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+                        clearInterval(wait);
+                    }, 4500);
+                    $(".livechat-girl").hover(function () {
+                        clearInterval(wait);
+                        $(".livechat-hint").removeClass("hide_hint").addClass("show_hint");
+                    }, function () {
+                        $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+                    }).click(function () {
+                        if (isMobile) {
+                            window.location.href = 'http://www.baidu.com';
+                        } else {
+                            var oWidth = 606,
+                                oHeight = 630,
+                                top = ($(window).height() / 2) - (oHeight / 2),
+                                left = ($(window).width() / 2) - (oWidth / 2);
+                            window.open('http://www.baidu.com', '', 'width=' + oWidth + ',height=' + oHeight + ',scrollbars=yes,top=' + top + ',left=' + left + ',resizable=yes');
+                        }
+                    });
+                })(jQuery);
+            </script>
+        </div>
     </div>
-
+    <div class="smblock" style="height: 50px;"></div>
+    <div class="phonefooter">
+        <div class="menu-nav-container">
+            <ul id="menu-nav" class="phonenav__list">
+                <li id="menu-item-331"
+                    class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-331">
+                    <a th:href="@{/}"><i class="fa fa-home"></i><span class="fontawesome-text"> 首页</span></a>
+                </li>
+                <li id="menu-item-332" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-332">
+                    <a th:href="@{/blog}"><i class="fa fa-file-text"></i><span class="fontawesome-text"> 文章</span></a>
+                </li>
+                <li id="menu-item-333" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-333">
+                    <a href="#"><i class="fa fa-book"></i><span class="fontawesome-text"> 专题</span></a>
+                </li>
+                <li id="menu-item-334" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-334">
+                    <a href="#"><i class="fa fa-user-circle"></i><span class="fontawesome-text"> 我的</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <!-- bootstrap -->
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <th:block th:replace="${scripts}"/>

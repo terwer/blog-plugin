@@ -76,6 +76,7 @@ header{
     height: 75px;
     line-height: 75px;
     box-shadow: 0 2px 6px 0 rgba(63,74,105,.16);
+    margin-bottom: 20px;
 }
 .logo{
     margin-top: 0;
