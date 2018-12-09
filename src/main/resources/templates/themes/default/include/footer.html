@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="commonFooterCustom(scripts)">
+<footer th:fragment="commonFooterCustom(scripts)">
     <div>
         <p>
             <a href="http://www.terwergreen.com/" th:href="@{/}" target="_blank">
@@ -44,6 +44,6 @@
     </div>
 
     <th:block th:replace="${scripts}"/>
-</div>
+</footer>
 </body>
 </html>

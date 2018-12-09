@@ -13,12 +13,17 @@
     </style>
 </head>
 <body>
+<!-- 头部开始 -->
+<header th:include="themes/default/include/header::commonHeaderContent">
+</header>
 
-<div th:include="themes/default/include/header::commonHeaderContent"></div>
+<!-- 正文开始 -->
+<div>Body</div>
 
-<div th:include="themes/default/include/footer::commonFooterCustom(~{::script})">
+<!-- 底部开始 -->
+<footer th:include="themes/default/include/footer::commonFooterCustom(~{::script})">
     <script type="text/javascript">
     </script>
-</div>
+</footer>
 </body>
 </html>
