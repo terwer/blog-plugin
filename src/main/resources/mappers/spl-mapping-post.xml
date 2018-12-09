@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bgapp">
+    <!-- 获取文章属性 -->
+    <!-- <select id="getPostMeta" resultType="com.terwergreen.plugins.blog.pojo.PostMeta">
+        SELECT pm.meta_key as metaKey,ifnull(pm.meta_value,'文章') as metaValue FROM bg_postmeta pm
+        WHERE pm.post_id = #{post_id}
+    </select> -->
+</mapper>
