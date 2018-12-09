@@ -8,7 +8,7 @@
 -->
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
-<head th:include="themes/default/include/header::commonHeaderCustom(${siteConfig.webname} + ' - ' + ${siteConfig.webslogen},~{::style})">
+<head th:include="themes/default/include/header::commonHeaderCustom('文章标题' + ' - ' + ${siteConfig.webname},~{::style})">
     <style type="text/css">
     </style>
 </head>
@@ -18,7 +18,7 @@
 </header>
 
 <!-- 正文开始 -->
-<p>首页</p>
+<p>文章内容</p>
 
 <!-- 底部开始 -->
 <footer th:include="themes/default/include/footer::commonFooterCustom(~{::script})">
