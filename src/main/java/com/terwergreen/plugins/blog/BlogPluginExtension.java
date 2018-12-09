@@ -3,6 +3,7 @@ package com.terwergreen.plugins.blog;
 import com.terwergreen.plugins.PluginInterface;
 import com.terwergreen.plugins.blog.front.BlogApi;
 import com.terwergreen.plugins.blog.front.BlogController;
+import com.terwergreen.plugins.blog.front.BlogManageController;
 import com.terwergreen.plugins.blog.service.impl.BlogServiceImpl;
 import org.pf4j.Extension;
 import org.slf4j.Logger;
@@ -37,6 +38,8 @@ public class BlogPluginExtension implements PluginInterface {
     private void registerBeans() {
         applicationContext.registerBean(BlogController.class);
         logger.info("BlogPluginExtension registerBean " + BlogController.class + " in applicationContext " + applicationContext);
+        applicationContext.registerBean(BlogManageController.class);
+        logger.info("BlogPluginExtension registerBean " + BlogManageController.class + " in applicationContext " + applicationContext);
         applicationContext.registerBean(BlogApi.class);
         logger.info("BlogPluginExtension registerBean " + BlogApi.class + " in applicationContext " + applicationContext);
         applicationContext.registerBean(BlogServiceImpl.class);
