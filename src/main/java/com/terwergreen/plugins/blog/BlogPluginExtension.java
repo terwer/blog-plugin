@@ -5,8 +5,11 @@ import com.terwergreen.plugins.blog.front.BlogApi;
 import com.terwergreen.plugins.blog.front.BlogController;
 import com.terwergreen.plugins.blog.front.BlogManageController;
 import com.terwergreen.plugins.blog.front.PostApi;
+import com.terwergreen.plugins.blog.pojo.Post;
+import com.terwergreen.plugins.blog.pojo.PostMeta;
 import com.terwergreen.plugins.blog.service.impl.BlogServiceImpl;
 import com.terwergreen.plugins.blog.service.impl.PostServiceImpl;
+import org.mybatis.spring.annotation.MapperScan;
 import org.pf4j.Extension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +38,7 @@ public class BlogPluginExtension implements PluginInterface {
         logger.info("BlogPluginExtension contructor");
         // 注册插件依赖
         registerBeans();
+        logger.info("BlogPluginExtension插件注册完毕");
     }
 
     private void registerBeans() {
@@ -44,6 +48,8 @@ public class BlogPluginExtension implements PluginInterface {
         applicationContext.registerBean(BlogServiceImpl.class);
         applicationContext.registerBean(PostApi.class);
         applicationContext.registerBean(PostServiceImpl.class);
+        applicationContext.registerBean(Post.class);
+        applicationContext.registerBean(PostMeta.class);
     }
 
     @Override

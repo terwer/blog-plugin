@@ -2,6 +2,7 @@ package com.terwergreen.plugins.blog.pojo;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.ibatis.type.Alias;
 
 /**
  * 文章属性
@@ -12,6 +13,7 @@ import lombok.Setter;
  **/
 @Getter
 @Setter
+@Alias("postmeta")
 public class PostMeta {
     private Integer postId;
     private String metaKey;

@@ -7,6 +7,7 @@ import com.terwergreen.util.MarkdownUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * 文章
  */
+@Alias("post")
 public class Post {
     /**
      * 文章ID
