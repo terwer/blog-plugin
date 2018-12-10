@@ -30,8 +30,9 @@
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:inline="javascript">
         //设置项目根路径
-        window.BUGUCMS_BASE_URL = 'http://www.terwergreen.com/';/*[[@{/}]]*/'/';
+        window.BUGUCMS_BASE_URL = /*[[@{/}]]*/'/';
         window.BLOG_BASE_URL = /*[[@{/blog/}]]*/'/blog/';
+        window.BLOG_API_BASE_URL = /*[[@{/api/blog/}]]*/'/api/blog/';
         window.BLOG_THEME_PATH = /*[[@{|/blog/templates/themes/${siteConfig.webtheme}/|}]]*/'/blog/templates/themes/default/';
     </script>
     <style type="text/css">

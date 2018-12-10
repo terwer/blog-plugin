@@ -156,7 +156,7 @@
                         return elemCont.focus();
                     }
                     console.log(JSON.stringify(conf.request));
-                    var essayNewUrl = BUGUCMS_BASE_URL + 'api/post/new';//数据接口地址
+                    var essayNewUrl = BLOG_API_BASE_URL + 'post/new';//数据接口地址
                     // 如果开启token，传入token
                     if (conf.request.tokenName) {
                         essayNewUrl += '?tokenString=' + conf.request.tokenString;
@@ -214,7 +214,7 @@
                         obj: $(obj),
                         str: "+1",
                         callback: function () {
-                            var essayLikeUrl = BUGUCMS_BASE_URL + 'api/post/meta/' + postId;//数据接口地址
+                            var essayLikeUrl = BLOG_API_BASE_URL + 'post/meta/' + postId;//数据接口地址
                             // 如果开启token，传入token
                             if (conf.request.tokenName) {
                                 essayLikeUrl += '?tokenString=' + conf.request.tokenString;
@@ -284,7 +284,7 @@
                 }, 1000);
             }
             function getData() {
-                var essayListUrl = BUGUCMS_BASE_URL + 'api/post/essay';//数据接口地址
+                var essayListUrl = BLOG_API_BASE_URL + 'post/essay';//数据接口地址
                 // 如果开启token，传入token
                 if (conf.request.tokenName) {
                     essayListUrl += '?tokenString=' + conf.request.tokenString;
