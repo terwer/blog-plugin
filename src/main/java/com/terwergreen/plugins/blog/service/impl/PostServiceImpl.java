@@ -60,8 +60,8 @@ public class PostServiceImpl implements PostService {
     /**
      * 查询单个文章
      *
-     * @param slug
-     * @return
+     * @param slug 文章别名
+     * @return 文章
      */
     @Override
     public Post getPostBySlug(String slug) {
