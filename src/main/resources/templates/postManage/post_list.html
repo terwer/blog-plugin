@@ -7,12 +7,8 @@
     |_| \___||_|     \_/\_/  \___||_|
 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      lang="zh"
-      layout:decorate="include/list_inc"
-      th:with="title='所有文章'">
-
-<header layout:fragment="customHeader">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh" th:with="title='所有文章'">
+<head th:include="include/list_inc::commonHeaderCustom('',~{::style})">
     <style type="text/css">
         .layui-btn i {
             font-size: 14px !important;
@@ -22,45 +18,38 @@
             padding: 16px 10px 0 15px;
         }
     </style>
+</head>
+
+<body>
+<header th:include="include/edit_inc::commonHeaderContent">
 </header>
 
-<div layout:fragment="content">
+<div>
     <div class="table-header" id="tableHeader">
         <div class="layui-inline">
-            <input class="layui-input" data-type="reload" id="search" name="search" placeholder="关键字..." autocomplete="off">
+            <input class="layui-input" data-type="reload" id="search" name="search" placeholder="关键字..."/>
         </div>
         <button class="layui-btn" data-type="reload">搜索</button>
     </div>
     <table id="postTable"></table>
 </div>
 
-<footer layout:fragment="customFooter">
+<footer th:include="include/edit_inc::commonFooterCustom(~{::script})">
     <script type="text/javascript">
         layui.config({base: BUGUCMS_BASE_URL + 'static/lib/'}).extend({
             conf: 'bugucms/conf',
             tips: 'bugucms/extend/tips'
         }).use(['conf', 'tips', 'table', 'layer', 'form'], function () {
-            var bugucms = top.layui.bugucms,
-                conf = layui.conf,
-                // common = layui.common,
+            var conf = layui.conf,
                 table = layui.table,
                 layer = layui.layer,
                 form = layui.form,
                 $ = layui.$,
                 tips = layui.tips;
 
-            if (typeof bugucms == "undefined") {
-                //询问框
-                layer.confirm('不允许单独打开此页面', {
-                    btn: ['确认', '取消'] //按钮
-                }, function () {
-                    window.location.href = BUGUCMS_BASE_URL + BUGUCMS_ADMIN_PATH + "/";
-                });
-            }
-
             //加载数据
             var myindex = layer.load();
-            var postListUrl = BUGUCMS_BASE_URL + 'api/post/list';//数据接口地址
+            var postListUrl = BLOG_API_BASE_URL + 'post/list';//数据接口地址
             // 如果开启token，传入token
             if (conf.request.tokenName) {
                 postListUrl += '?tokenString=' + conf.request.tokenString;
@@ -88,14 +77,19 @@
                                 if (pname == '') {
                                     pname = d.postId;
                                 }
-                                return '<a class="layui-table-link" href="' + BUGUCMS_BASE_URL + 'post/' + pname + '.html" target="_blank">' + ptitle + '</a>';
+                                return '<a class="layui-table-link" href="' + BLOG_BASE_URL + 'post/' + pname + '.html" target="_blank">' + ptitle + '</a>';
                             }
                         },
                         {field: 'postDate', title: '发布时间', width: 160, sort: true, fixed: 'center'},
                         {
-                            field: 'action', title: '操作', width: 180, sort: true, fixed: 'center', templet: function (d) {
+                            field: 'action',
+                            title: '操作',
+                            width: 180,
+                            sort: true,
+                            fixed: 'center',
+                            templet: function (d) {
                                 var m = '<button class="layui-btn layui-btn-sm" bg-form-action="edit" bg-form-title="更新文章" bg-form-icon="layui-icon-release" bg-form-href="postManage/edit/' + d.postId + '"><i class="layui-icon">&#xe642;修改</i></button>';
-                                var r = '<button class="layui-btn layui-btn-danger layui-btn-sm" bg-form-action="delete" bg-form-title="删除文章" bg-form-icon="layui-icon-release" bg-form-href="api/post/delete/' + d.postId + '"><i class="layui-icon">&#xe640;删除</i></button>';
+                                var r = '<button class="layui-btn layui-btn-danger layui-btn-sm" bg-form-action="delete" bg-form-title="删除文章" bg-form-icon="layui-icon-release" bg-form-href="post/delete/' + d.postId + '"><i class="layui-icon">&#xe640;删除</i></button>';
                                 return '<div class="layui-btn-group">' + m + r + '</div>';
                             }
                         }
@@ -156,7 +150,7 @@
 
                 switch (action) {
                     case "edit": {
-                        bugucms.go(BUGUCMS_BASE_URL + BUGUCMS_ADMIN_PATH + "/" + href, title, icon);
+                        window.location.href = BLOG_BASE_URL + href;
                         break;
                     }
                     case "delete": {
@@ -176,7 +170,7 @@
                         btn: ['确认', '取消'] //按钮
                     }, function () {
                         layer.closeAll('dialog');
-                        var delUrl = BUGUCMS_BASE_URL + url;
+                        var delUrl = BLOG_API_BASE_URL + url;
                         // 如果开启token，传入token
                         if (conf.request.tokenName) {
                             delUrl += '?tokenString=' + conf.request.tokenString;
@@ -204,7 +198,8 @@
                     });
                 }
             });
-
         });
     </script>
 </footer>
+</body>
+</html>

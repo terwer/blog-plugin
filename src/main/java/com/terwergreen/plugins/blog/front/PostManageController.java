@@ -58,31 +58,12 @@ public class PostManageController {
     @RequestMapping("list")
     public String list(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         try {
+            model.addAttribute("siteConfig", commonService.getSiteConfig());
         } catch (Exception e) {
             logger.error("系统异常" + e.getLocalizedMessage(), e);
             throw new WebException(e);
         }
         return "postManage/post_list";
-    }
-
-    @RequestMapping("cat")
-    public String cat(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-        } catch (Exception e) {
-            logger.error("系统异常" + e.getLocalizedMessage(), e);
-            throw new WebException(e);
-        }
-        return "postManage/post_cat";
-    }
-
-    @RequestMapping("tag")
-    public String tag(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        try {
-        } catch (Exception e) {
-            logger.error("系统异常" + e.getLocalizedMessage(), e);
-            throw new WebException(e);
-        }
-        return "postManage/post_tag";
     }
 
     /**
