@@ -1,15 +1,11 @@
 package com.terwergreen.plugins.blog;
 
 import com.terwergreen.plugins.PluginInterface;
-import com.terwergreen.plugins.blog.front.BlogApi;
-import com.terwergreen.plugins.blog.front.BlogController;
-import com.terwergreen.plugins.blog.front.BlogManageController;
-import com.terwergreen.plugins.blog.front.PostApi;
+import com.terwergreen.plugins.blog.front.*;
 import com.terwergreen.plugins.blog.pojo.Post;
 import com.terwergreen.plugins.blog.pojo.PostMeta;
 import com.terwergreen.plugins.blog.service.impl.BlogServiceImpl;
 import com.terwergreen.plugins.blog.service.impl.PostServiceImpl;
-import org.mybatis.spring.annotation.MapperScan;
 import org.pf4j.Extension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +46,7 @@ public class BlogPluginExtension implements PluginInterface {
         applicationContext.registerBean(PostServiceImpl.class);
         applicationContext.registerBean(Post.class);
         applicationContext.registerBean(PostMeta.class);
+        applicationContext.registerBean(PostManageController.class);
     }
 
     @Override
