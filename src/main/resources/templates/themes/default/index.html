@@ -36,18 +36,18 @@
                                 <div class="clearfix"></div>
                             </ul>
                             <script type="text/javascript">
-                                //    首页导航条滚动
-                                // var all_width = document.getElementsByClassName('slidetitle')[0].scrollWidth
-                                // $('.slidetitle').css({
-                                //    'width': all_width + 'px'
-                                // });
-                                // var myscroll = new iScroll("hdwrap", {
-                                //    scrollX: true,
-                                //    scrollY: false,
-                                //    hScrollbar: false,
-                                //    vScrollbar: false,
-                                //    vScroll: false
-                                // });
+                                // 首页导航条滚动
+                                var all_width = document.getElementsByClassName('slidetitle')[0].scrollWidth
+                                $('.slidetitle').css({
+                                   'width': all_width + 'px'
+                                });
+                                var myscroll = new iScroll("hdwrap", {
+                                   scrollX: true,
+                                   scrollY: false,
+                                   hScrollbar: false,
+                                   vScrollbar: false,
+                                   vScroll: false
+                                });
                             </script>
                         </div>
                         <div class="bd">
@@ -63,7 +63,7 @@
                                                     <div class="newscatname">
                                                         <ul class="post-categories">
                                                             <li>
-                                                                <a th:href="@{/category/java}" rel="category tag">java</a>
+                                                                <a th:href="@{/category/java}" rel="category tag" v-cloak>java</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -99,7 +99,7 @@
                     </div>
 
                     <script id="jsID" type="text/javascript">
-                        // jQuery(".slideTxtBox").slide({trigger: "click"});
+                        jQuery(".slideTxtBox").slide({trigger: "click"});
                     </script>
                 </section>
             </div>
