@@ -18,7 +18,7 @@
 </header>
 
 <!-- 正文开始 -->
-<p>文章内容</p>
+<p th:utext="${post.postRawContent}"></p>
 
 <!-- 底部开始 -->
 <footer th:include="themes/default/include/footer::commonFooterCustom(~{::script})">

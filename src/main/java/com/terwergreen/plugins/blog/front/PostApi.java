@@ -13,6 +13,7 @@ import com.terwergreen.util.RestResponse;
 import com.terwergreen.util.RestResponseStates;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -42,7 +43,7 @@ import static com.terwergreen.util.Constants.DEFAULT_PAGE_SIZE;
 public class PostApi {
     private static final Logger logger = LoggerFactory.getLogger(PostApi.class);
 
-    @Resource
+    @Autowired
     private PostService postService;
 
     @RequestMapping(value = "/post/list", method = RequestMethod.POST, produces = "application/json;charset=utf-8")

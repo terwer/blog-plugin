@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private CommonDAO commonDAO;
 
-    @Resource
+    @Autowired
     private CommonService commonService;
 
     @Value("${bugucms.admin.password.encode.enable}")
