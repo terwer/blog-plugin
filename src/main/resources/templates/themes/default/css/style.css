@@ -1427,15 +1427,6 @@ header{
     background-color: #efefef;
     text-decoration: none;
 }
-.loadmore .loading {
-    background: url("images/timg.gif") center no-repeat; color: #555;
-    background-size: 60px 60px;
-    height: 60px;
-}
-.loadmore .loading:hover {
-    background-color: transparent;
-    cursor: default;
-}
 .login-box{
     width: 430px;
     height: 400px;

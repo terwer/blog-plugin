@@ -18,7 +18,7 @@
 </header>
 
 <!-- 正文开始 -->
-<p th:utext="${post.postRawContent}"></p>
+<p th:text="${postId}"></p>
 
 <!-- 底部开始 -->
 <footer th:include="themes/default/include/footer::commonFooterCustom(~{::script})">
