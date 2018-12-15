@@ -6,8 +6,6 @@
     <!-- 根据类型获取文章 -->
     <resultMap id="postMap" type="post">
         <id column="post_id" property="postId"/>
-        <result column="meta_key" property="metaKey"/>
-        <result column="meta_value" property="metaValue"/>
         <result column="post_finished" property="postFinished"/>
         <result column="comment_count" property="commentCount"/>
         <result column="post_type" property="postType"/>
@@ -22,10 +20,10 @@
         <collection property="postMetas" ofType="postmeta" select="getPostMeta" column="post_id">
         </collection>
     </resultMap>
-    <select id="getPostsByType" resultMap="postMap">
-        SELECT p.post_id,p.post_finished,p.comment_count, p.post_status, p.post_type, p.post_name, p.post_title,p.post_content,p.post_date,p.post_modified,
+    <select id="getPostsByType" parameterType="java.util.Map" resultMap="postMap">
+        SELECT DISTINCT p.post_id,p.post_finished,p.comment_count, p.post_status, p.post_type, p.post_name, p.post_title,p.post_content,p.post_date,p.post_modified,
         su.user_name,su.nick_name,su.user_profile,su.user_url,su.mobile,su.email,su.status,su.user_desc,su.user_registered,
-        sr.id as role_id,sr.name as role_name,sr.cn_name
+        sr.id AS role_id,sr.name AS role_name,sr.cn_name
         FROM bg_posts p
         LEFT JOIN bg_postmeta pm ON pm.post_id = p.post_id
         LEFT JOIN sys_user su ON su.id = p.post_author
@@ -50,11 +48,18 @@
         <if test="search!=null and search!=''">
             AND ((p.post_title LIKE concat(concat('%',#{search}),'%')) OR (p.post_content LIKE concat(concat('%',#{search}),'%')))
         </if>
-        ORDER BY p.post_modified DESC
+        <choose>
+            <when test="isHot!=null and isHot==1">
+                ORDER BY CAST(if(pm.meta_key='view_count',pm.meta_value,0) AS unsigned) DESC
+            </when>
+            <otherwise>
+                ORDER BY p.post_modified DESC
+            </otherwise>
+        </choose>
     </select>
     <!-- 获取文章属性 -->
     <select id="getPostMeta" resultType="postmeta">
-        SELECT pm.meta_key as metaKey,ifnull(pm.meta_value, '文章') as metaValue
+        SELECT pm.meta_key AS metaKey,ifnull(pm.meta_value, '文章') AS metaValue
         FROM bg_postmeta pm
         WHERE pm.post_id = #{post_id}
     </select>

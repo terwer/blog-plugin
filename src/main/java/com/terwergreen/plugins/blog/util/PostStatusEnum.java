@@ -11,7 +11,11 @@ public enum PostStatusEnum {
     /**
      * 草稿
      */
-    POST_STATUS_DRAFT("draft", 2);
+    POST_STATUS_DRAFT("draft", 2),
+    /**
+     * 回收站
+     */
+    POST_STATUS_TRASH("trash", 2);
 
     // 成员变量
     private String name;

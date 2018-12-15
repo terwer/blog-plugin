@@ -52,7 +52,6 @@ public class Post {
      * 文章标题
      */
     @Getter
-    @Setter
     private String postTitle;
     /**
      * 文章内容
@@ -125,11 +124,15 @@ public class Post {
      */
     private Integer praiseCount;
 
+    public void setPostTitle(String postTitle) {
+        this.postTitle = HtmlUtil.parseHtml(postTitle, 28);
+    }
+
     public void setPostContent(String postContent) {
         this.postRawContent = postContent;
         this.postContent = MarkdownUtil.md2html(postContent);
         this.thumbnails = ImageUtil.getImgSrc(this.getPostContent());
-        this.postDesc = HtmlUtil.parseHtml(this.getPostContent(), 155);
+        this.postDesc = HtmlUtil.parseHtml(this.getPostContent(), 120);
     }
 
     public boolean isNewFlag() {

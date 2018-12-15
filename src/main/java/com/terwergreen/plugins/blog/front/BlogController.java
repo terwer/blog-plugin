@@ -35,7 +35,7 @@ public class BlogController {
     private PostService postService;
 
     @RequestMapping
-    public String blog(Model model, String q, Integer page) throws WebException {
+    public String blog(Model model, String s, Integer page) throws WebException {
         SiteConfig siteConfig = null;
         List<Post> dingPostList = null;
         List<Post> postList = null;
@@ -46,6 +46,7 @@ public class BlogController {
                 logger.error("站点配置异常:siteConfigDTO=null");
                 throw new WebException("站点配置异常:siteConfigDTO=null");
             }
+            model.addAttribute("s", s);
         } catch (Exception e) {
             logger.error("系统异常" + e.getLocalizedMessage(), e);
             throw new WebException(e);

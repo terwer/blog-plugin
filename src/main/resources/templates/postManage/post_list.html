@@ -26,11 +26,31 @@
 
 <div>
     <div class="table-header" id="tableHeader">
-        <div class="layui-inline">
-            <input class="layui-input" data-type="reload" id="search" name="search" placeholder="关键字..."/>
+        <div class="layui-form">
+            <div class="layui-input-inline">
+                <select id="selPostType">
+                    <option value="">所有</option>
+                    <option value="post" selected>文章</option>
+                    <option value="note">笔记</option>
+                    <option value="essay">随笔</option>
+                    <option value="page">页面</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <select id="selPostStatus">
+                    <option value="">所有</option>
+                    <option value="publish" selected>已发布</option>
+                    <option value="draft">草稿</option>
+                    <option value="trash">回收站</option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input class="layui-input" data-type="reload" id="search" name="search" placeholder="关键字..."/>
+            </div>
+            <div class="layui-input-inline">
+                <button class="layui-btn" data-type="reload">搜索</button>
+            </div>
         </div>
-        <button class="layui-btn" data-type="reload">搜索</button>
-    </div>
     <table id="postTable"></table>
 </div>
 
@@ -57,7 +77,12 @@
             console.log("postListUrl:" + postListUrl);
             table.render({
                 elem: '#postTable',
-                url: postListUrl, //数据接口
+                url: postListUrl,
+                where: {
+                    search: $('#search').val(),
+                    postType: $("#selPostType").val(),
+                    postStatus: $("#selPostStatus").val()
+                },
                 method: 'post',
                 page: true,//开启分页
                 loading: true,//加载等待
@@ -113,8 +138,10 @@
                             curr: 1 //重新从第 1 页开始
                         },
                         where: {
-                            search: $('#search').val()
-                        }
+                            search: $('#search').val(),
+                            postType: $("#selPostType").val(),
+                            postStatus: $("#selPostStatus").val()
+                        },
                     });
                 }
             };

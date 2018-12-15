@@ -113,37 +113,6 @@
                     <div class="circle c-3"></div>
                 </div>
             </div>
-            <script type="text/javascript">
-                (function ($) {
-                    setInterval(function () {
-                        if ($(".animated-circles").hasClass("animated")) {
-                            $(".animated-circles").removeClass("animated");
-                        } else {
-                            $(".animated-circles").addClass('animated');
-                        }
-                    }, 3000);
-                    var wait = setInterval(function () {
-                        $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
-                        clearInterval(wait);
-                    }, 4500);
-                    $(".livechat-girl").hover(function () {
-                        clearInterval(wait);
-                        $(".livechat-hint").removeClass("hide_hint").addClass("show_hint");
-                    }, function () {
-                        $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
-                    }).click(function () {
-                        if (isMobile) {
-                            window.location.href = 'http://www.baidu.com';
-                        } else {
-                            var oWidth = 606,
-                                oHeight = 630,
-                                top = ($(window).height() / 2) - (oHeight / 2),
-                                left = ($(window).width() / 2) - (oWidth / 2);
-                            window.open('http://www.baidu.com', '', 'width=' + oWidth + ',height=' + oHeight + ',scrollbars=yes,top=' + top + ',left=' + left + ',resizable=yes');
-                        }
-                    });
-                })(jQuery);
-            </script>
         </div>
     </div>
     <div class="smblock" style="height: 50px;"></div>
@@ -166,8 +135,61 @@
             </ul>
         </div>
     </div>
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <!-- layui -->
+    <script type="text/javascript" th:src="@{/webjars/layui/layui.js}"></script>
     <!-- bootstrap -->
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- vuejs开发环境版本，包含了有帮助的命令行警告 -->
+    <script th:src="@{/webjars/vue/vue.js}"></script>
+    <script type="text/javascript">
+        $(document).on('show.bs.modal', '#seacherModal', function () {
+            console.log("search area is showing...");
+            setTimeout(function (){
+                $('#s').focus();
+            }, 1000);
+        })
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('.nav__trigger').on('click', function (e) {
+                e.preventDefault();
+                $(this).parent().toggleClass('nav--active');
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        (function ($) {
+            setInterval(function () {
+                if ($(".animated-circles").hasClass("animated")) {
+                    $(".animated-circles").removeClass("animated");
+                } else {
+                    $(".animated-circles").addClass('animated');
+                }
+            }, 3000);
+            var wait = setInterval(function () {
+                $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+                clearInterval(wait);
+            }, 4500);
+            $(".livechat-girl").hover(function () {
+                clearInterval(wait);
+                $(".livechat-hint").removeClass("hide_hint").addClass("show_hint");
+            }, function () {
+                $(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+            }).click(function () {
+                if (isMobile) {
+                    window.location.href = 'http://www.baidu.com';
+                } else {
+                    var oWidth = 606,
+                        oHeight = 630,
+                        top = ($(window).height() / 2) - (oHeight / 2),
+                        left = ($(window).width() / 2) - (oWidth / 2);
+                    window.open('http://www.baidu.com', '', 'width=' + oWidth + ',height=' + oHeight + ',scrollbars=yes,top=' + top + ',left=' + left + ',resizable=yes');
+                }
+            });
+        })(jQuery);
+    </script>
     <th:block th:replace="${scripts}"/>
 </footer>
 </body>

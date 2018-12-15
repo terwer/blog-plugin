@@ -10,9 +10,6 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:include="themes/default/include/header::commonHeaderCustom('随笔' + ' - ' + ${siteConfig.webname},~{::style})">
     <style type="text/css">
-        [v-cloak] {
-            display: none;
-        }
         .read-more a {
             color: #1E9FFF;
         }
@@ -27,7 +24,6 @@
 </head>
 <body>
 <!-- 头部开始 -->
-<link rel="stylesheet"  type="text/css" th:href="@{/webjars/layui/css/layui.css}"/>
 <link rel="stylesheet"  type="text/css" th:href="@{/blog/templates/themes/default/css/essay.css}"/>
 <header th:include="themes/default/include/header::commonHeaderContent"></header>
 
@@ -46,20 +42,20 @@
             </div>
 
             <div id="LAY-msg-box">
-                <div class="info-box">
+                <div class="info-box" v-cloak>
                     <div class="info-item" v-for="timeline in timelines">
                         <img class="info-img" src="https://tvax1.sinaimg.cn/crop.0.0.540.540.180/0075uTFdly8fs75paasl1j30f00f0afd.jpg" alt="">
                         <div class="info-text">
-                            <h4 v-cloak>{{ timeline.title }}</h4>
+                            <h4>{{ timeline.title }}</h4>
                             <p class="title count">
                                 <span class="name">倚楼听雨</span>
                                 <span class="info-img like" v-bind:alt="timeline.key"><i class="layui-icon layui-icon-praise"></i><em>{{ timeline.praise }}</em></span>
                             </p>
-                            <p class="info-intr" v-html="timeline.content" v-cloak>
+                            <p class="info-intr" v-html="timeline.content">
                             </p>
                             <p class="read-more">
                                 <span v-if="timeline.content.indexOf('...') >= 0">
-                                    <a th:alt="@{/post/}" v-bind:title="timeline.key" href="javascript:void(0);" v-on:click="read">阅读全文</a>
+                                    <a v-bind:href="blogPath + 'post/' + timeline.key + '.html'" target="_blank">阅读全文</a>
                                 </span>
                             </p>
                         </div>
@@ -67,7 +63,7 @@
                     <div class="load-more text-center">
                         <p></p>
                         <p></p>
-                        <p v-text="tips" v-cloak>加载更多</p>
+                        <p v-text="tips">加载更多</p>
                     </div>
                 </div>
             </div>
@@ -78,10 +74,6 @@
 
 <!-- 底部开始 -->
 <footer th:include="themes/default/include/footer::commonFooterCustom(~{::script})">
-    <!-- vuejs开发环境版本，包含了有帮助的命令行警告 -->
-    <script th:src="@{/webjars/vue/vue.js}"></script>
-    <!-- layui -->
-    <script type="text/javascript" th:src="@{/webjars/layui/layui.js}"></script>
     <script type="text/javascript">
         layui.config({base: BUGUCMS_BASE_URL + 'static/lib/'}).extend({
             conf: 'bugucms/conf'
@@ -101,36 +93,20 @@
                     timelines: [
                         // {key: '20180823100000', year: '2018', title: 'Hello content1!', content: 'content1'}
                     ],
-                    tips: '努力加载中...'
+                    tips: '努力加载中...',
+                    blogPath: ''
                 },
                 created: function () {
                     this.tips = "加载更多";
+                    this.blogPath = BLOG_BASE_URL;
                     getData();
                 },
                 mounted: function () {
                     // 添加滚动事件，检测滚动到页面底部
                     window.addEventListener('scroll', this.scrollBottom)
                 },
-                // 在 `methods` 对象中定义方法
+                // 在methods对象中定义方法
                 methods: {
-                    read: function (event) {
-                        // `this` 在方法里指向当前 Vue 实例
-                        console.log('alt:' + $(event.target).attr("alt"));
-                        console.log('title:' + $(event.target).attr("title"));
-                        var url = BUGUCMS_BASE_URL + 'post/' + $(event.target).attr("title") + '.html';
-                        //window.location.href = url;
-                        redirect_blank(url);
-                        // `event` 是原生 DOM 事件
-                        if (event) {
-                            console.log('e:' + event.target.tagName);
-                        }
-                        function redirect_blank(url) {
-                            var a = document.createElement('a');
-                            a.target = "_blank";
-                            a.href = url;
-                            a.click();
-                        }
-                    },
                     scrollBottom:function (event) {
                         //鼠标滚动到页面最底部加载数据
                         var documentHeight = [0];
@@ -284,6 +260,19 @@
                 }, 1000);
             }
             function getData() {
+                var index = layer.load(2, {
+                    shade: [0.6, '#fff'], content: '加载中...', time: 500, success: function (layero) {
+                        layero.find('.layui-layer-content').css({
+                            'padding-top': '6px',
+                            'width': '150px',
+                            'padding-left': '40px'
+                        });
+                        layero.find('.layui-layer-ico16, .layui-layer-loading .layui-layer-loading2').css({
+                            'width': '150px !important',
+                            'background-position': '2px 0 !important'
+                        });
+                    }
+                });
                 var essayListUrl = BLOG_API_BASE_URL + 'post/essay';//数据接口地址
                 // 如果开启token，传入token
                 if (conf.request.tokenName) {

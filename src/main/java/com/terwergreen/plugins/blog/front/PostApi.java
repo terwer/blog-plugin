@@ -47,7 +47,7 @@ public class PostApi {
 
     @RequestMapping(value = "/post/list", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String getPosts(Model model, HttpServletRequest request, HttpServletResponse response, String postType, String search, Integer page, Integer limit) throws Exception {
+    public String getPosts(Model model, HttpServletRequest request, HttpServletResponse response, String postType,String postStatus, String search, Integer page, Integer limit) throws Exception {
         Map resultMap = new HashMap();
 
         if (page == null) {
@@ -61,6 +61,9 @@ public class PostApi {
             Map paramMap = new HashMap();
             if (!StringUtils.isEmpty(postType)) {
                 paramMap.put("postType", postType);
+            }
+            if (!StringUtils.isEmpty(postStatus)) {
+                paramMap.put("postStatus", postStatus);
             }
             if (!StringUtils.isEmpty(search)) {
                 paramMap.put("search", search);
@@ -81,7 +84,31 @@ public class PostApi {
         return JSON.toJSONString(resultMap);
     }
 
-    @RequestMapping(value = "/post/essay", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/post/hot", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @ResponseBody
+    public String getHotPosts(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Map resultMap = new HashMap();
+
+        try {
+            Map paramMap = new HashMap();
+            paramMap.put("isHot",1);
+            PageInfo<Post> posts = postService.getPostsByPage(1, 10, paramMap);
+            resultMap.put("code", 0);
+            resultMap.put("msg", "success");
+            resultMap.put("count", posts.getTotal());
+            resultMap.put("data", posts.getList());
+        } catch (Exception e) {
+            resultMap.put("code", 0);
+            resultMap.put("msg", "");
+            resultMap.put("count", 0);
+            resultMap.put("data", null);
+            logger.error("系统异常" + e.getLocalizedMessage(), e);
+            throw new RestException(e);
+        }
+        return JSON.toJSONString(resultMap);
+    }
+
+        @RequestMapping(value = "/post/essay", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getEssays(Model model, HttpServletRequest request, HttpServletResponse response, Integer page, Integer limit) throws Exception {
         Map resultMap = new HashMap();

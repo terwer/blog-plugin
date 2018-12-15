@@ -20,29 +20,105 @@
     <meta name="keywords" th:content="${siteConfig.keywords}">
     <meta name="description" th:content="${siteConfig.description}">
     <link rel="icon" type="image/x-icon" th:href="@{/static/favicon.ico}">
+    <!-- layui -->
+    <link rel="stylesheet"  type="text/css" th:href="@{/webjars/layui/css/layui.css}"/>
     <!-- font-awesome -->
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" media="all"/>
     <!-- bootstrap -->
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <!-- theme style -->
+    <!-- theme -->
     <link rel="stylesheet" type="text/css" th:href="@{/blog/templates/themes/default/css/style.css}"/>
-    <!-- jquery -->
-    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <th:block th:replace="${styles}"/>
     <script type="text/javascript" th:inline="javascript">
         //设置项目根路径
         window.BUGUCMS_BASE_URL = /*[[@{/}]]*/'/';
         window.BLOG_BASE_URL = /*[[@{/blog/}]]*/'/blog/';
         window.BLOG_API_BASE_URL = /*[[@{/api/blog/}]]*/'/api/blog/';
         window.BLOG_THEME_PATH = /*[[@{|/blog/templates/themes/${siteConfig.webtheme}/|}]]*/'/blog/templates/themes/default/';
+
+        //====================================
+        //js字符省略显示 14-09-18 By 唐有炜
+        function shortString(s, l, tag) {
+            if (s.length > l) {
+                return s.substring(0, l) + tag;
+            } else {
+                return s;
+            }
+        }
+
+        //获取客户端时间
+        function get_client_time() {
+            var now = new Date();
+            var curr_datetime = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+            return curr_datetime;
+        }
+
+        //根据身份证返回生日
+        function get_birthday_by_idcard(StrNo) {
+            var bir;
+            switch (StrNo.length) {
+                case 15:
+                    bir = StrNo.substr(6, 2) + "-" + StrNo.substr(8, 2) + "-" + StrNo.substr(10, 2);
+                    break;
+                case 18:
+                    bir = StrNo.substr(6, 4) + "-" + StrNo.substr(10, 2) + "-" + StrNo.substr(12, 2);
+                    break;
+                default:
+                    bir = get_current_date();
+            }
+            return bir;
+        }
+
+
+        function get_current_date() {
+            var now_date = new Date();
+            var now = now_date.getFullYear() + "-" + now_date.getMonth() + "-" + now_date.getDate();
+            return now;
+        }
+
+        //根据生日获取星座
+        function get_xingzuo_by_bir(bir) {
+            var m = parseInt(bir.split("-")[1]);
+            var d = parseInt(bir.split("-")[2]);
+            var XZDict = '摩羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手';
+            var Zone = new Array(1222, 122, 222, 321, 421, 522, 622, 722, 822, 922, 1022, 1122);
+
+            var i = 0;
+            if (((100 * m + d) > Zone[0]) || (100 * m + d) < Zone[1]) {
+                i = 0;
+            } else {
+                for (i = 1; i < 12; i++) {
+                    if ((100 * m + d) >= Zone[i] && (100 * m + d) < Zone[i + 1]) {
+                        break;
+                    }
+                }
+            }
+            result = XZDict.substring(2 * i, 2 * i + 2) + "座";
+            return result;
+        }
+
+        //根据生日获取属相
+        function get_shuxiang_by_bir(bir) {
+            var year = bir.split("-")[0];
+            var sxnames = ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"];
+            var sx = year % 12 - 3;
+            if (sx <= 0) {
+                sx += 12;
+            }
+            //alert(sx);
+            return "属" + sxnames[sx - 1];
+        }
     </script>
-    <style type="text/css">
-    </style>
-    <th:block th:replace="${styles}"/>
 </head>
 <body>
 <header th:fragment="commonHeaderContent">
     <div class="modal fade" id="seacherModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="">
+        <div>
             <div class="mxseacher" style="border:none;background:#fff;">
                 <div class="modal-header" style="border:none;position: absolute;right: 15px;top:0px;z-index: 9999">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -51,7 +127,7 @@
                 </div>
                 <div class="modal-body" style="">
                     <form id="searchform" class="" role="search" method="get" th:action="@{/blog}">
-                        <input class="sb-search-input" placeholder="输入关键词查找..." type="text" value="" name="s" id="s">
+                        <input class="sb-search-input" placeholder="输入关键词查找..." type="text" th:value="${s}" name="s" id="s" autofocus>
                         <input id="searchsubmit" class="sb-search-submit" type="submit" value="搜索">
                     </form>
                 </div>
@@ -97,14 +173,6 @@
                     </nav>
                 </div>
             </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('.nav__trigger').on('click', function (e) {
-                        e.preventDefault();
-                        $(this).parent().toggleClass('nav--active');
-                    });
-                })
-            </script>
         </div>
         <h1 class="logo">
             <a th:href="@{/}" title="terwer">

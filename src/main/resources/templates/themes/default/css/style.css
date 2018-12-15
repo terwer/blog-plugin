@@ -514,20 +514,102 @@ header{
     position: relative;
     background: #000;
 }
-.newsthumb img{
+
+.listcontent .newsthumb img{
     width: 100%;
-    height: auto;
+    /* height: auto; */
     transition:opacity 1s;
     -moz-transition:opacity 1s; /* Firefox 4 */
     -webkit-transition:opacity 1s; /* Safari and Chrome */
     -o-transition:opacity 1s; /* Opera */
     border: 1px solid #efefef;
+    height: 115px;
 }
+
+/*
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+    .listcontent .newsthumb img {
+        height: 115px;
+    }
+
+}
+
+/*
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .listcontent .newsthumb img {
+        height: 115px;
+    }
+}
+
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .listcontent .newsthumb img {
+        height: 115px;
+    }
+}
+
+/*
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .listcontent .newsthumb img {
+        height: 115px;
+    }
+}
+
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+    .listcontent .newsthumb img {
+        height: 60px;
+    }
+}
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px) {
+    .listcontent .newsthumb img {
+        height: 60px;
+    }
+}
+
+.hotnews .newsthumb img {
+    width: 100%;
+    height: auto;
+    transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    border: 1px solid #efefef;
+    height: 60px;
+}
+
 .newsthumb img:hover{
     opacity: 0.5;
 }
 .newstext{
     position: relative;
+    margin-bottom: 30px;
 }
 .newstext a h3{
     color: #3d464d;
