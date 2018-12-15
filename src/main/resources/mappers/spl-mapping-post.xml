@@ -24,6 +24,9 @@
         SELECT DISTINCT p.post_id,p.post_finished,p.comment_count, p.post_status, p.post_type, p.post_name, p.post_title,p.post_content,p.post_date,p.post_modified,
         su.user_name,su.nick_name,su.user_profile,su.user_url,su.mobile,su.email,su.status,su.user_desc,su.user_registered,
         sr.id AS role_id,sr.name AS role_name,sr.cn_name
+        <if test="isHot!=null and isHot==1">
+            ,CAST(if(pm.meta_key='view_count',pm.meta_value,0) AS unsigned)
+        </if>
         FROM bg_posts p
         LEFT JOIN bg_postmeta pm ON pm.post_id = p.post_id
         LEFT JOIN sys_user su ON su.id = p.post_author
