@@ -41,6 +41,7 @@ import static com.terwergreen.util.Constants.DEFAULT_PAGE_SIZE;
 @RequestMapping("api/blog")
 public class PostApi {
     private static final Logger logger = LoggerFactory.getLogger(PostApi.class);
+    private static final Integer DEFAULT_HOT_NUM = 2;
 
     @Autowired
     private PostService postService;
@@ -91,7 +92,7 @@ public class PostApi {
         try {
             Map paramMap = new HashMap();
             paramMap.put("isHot", 1);
-            PageInfo<Post> posts = postService.getPostsByPage(1, 10, paramMap);
+            PageInfo<Post> posts = postService.getPostsByPage(DEFAULT_PAGE_NUM, DEFAULT_HOT_NUM, paramMap);
             resultMap.put("code", 0);
             resultMap.put("msg", "success");
             resultMap.put("count", posts.getTotal());

@@ -21,9 +21,13 @@ body{
     overflow-x:hidden;
 
 }
-body a{
-    color: #666;
-}
+
+body a{color: #009688;}
+a:hover{color: #009688; transition: all .3s;}
+
+pre{font-size: 12px;background: none;font-family: Courier New;overflow: auto;}
+pre code{background-color: #fff;font-family: Courier New;tab-size: 2;}
+
 ul{
     margin: 0 !important;
     padding: 0;

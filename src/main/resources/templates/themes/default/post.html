@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="pagecon" v-cloak>
-                        <h1 class="pagetit">{{ post.postTitle }}</h1>
+                        <h1 class="pagetit">{{ post.postFullTitle }}</h1>
                         <div class="pageauthor">
                             <a th:href="@{/blog/author/terwer}">
                                 <img alt="terwer" th:src="@{/blog/templates/themes/default/images/avatar/default.png}" class="avatar avatar-96 photo" height="96" width="96">terwer
@@ -56,24 +56,11 @@
                         <div class="zhuanzai">
                             <span>本文为原创内容，作者：Terwer，转载请注明出处！</span>
                         </div>
+                        <!-- 分享与打赏
                         <div class="contentbottom">
-                            <div class="post-like">
-                                <a href="javascript:;" data-action="ding" data-id="193" class="favorite done">喜欢 <span class="count">5</span></a>
-                            </div>
-                            <!-- 百度分享冲突，已经去掉 -->
-                            <div class="shang">
-                                <span>赏</span>
-                                <div class="shangewm">
-                                    <div class="alipay-code">
-                                        <img class="alipay-img wdp-appear" src="http://mxnews.zzmaixun.com/wp-content/uploads/2018/07/2018-07-264.jpg"><b>支付宝扫码打赏</b>
-                                    </div>
-                                    <div class="wechat-code">
-                                        <img class="wechat-img wdp-appear" src="http://mxnews.zzmaixun.com/wp-content/uploads/2018/07/2018-07-264.jpg"><b>微信打赏</b>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="clearfix"></div>
                         </div>
+                        -->
                         <div class="prenext">
                             <p class="pre">上一篇：<span>已是最新文章</span></p>
                             <p class="next">下一篇：<a href="#" rel="prev">机器人汉堡店即将开业，做一个汉堡需要5分钟</a>
@@ -93,28 +80,28 @@
                     </div>
                     <div class="row">
                         <ul class="hotnews" id="related-post">
-                            <div class="col-md-6 col-xs-12" v-cloak>
+                            <div class="col-md-12 col-xs-12" v-cloak>
                                 <li v-for="relatedPost in relatedPosts">
                                     <div class="row">
-                                        <div class="col-md-4 col-xs-4" v-if="relatedPost.thumbnails.length>0">
+                                        <div class="col-md-2 col-xs-2" v-if="relatedPost.thumbnails.length>0">
                                             <div class="newsthumb">
-                                                <a v-bind:href="blogPath + 'post/' + (relatedPost.postSlug==''?relatedPost.postId:relatedPost.postSlug) + '.html'" v-bind:title="relatedPost.postTitle">
+                                                <a v-bind:href="blogPath + 'post/' + (relatedPost.postSlug==''?relatedPost.postId:relatedPost.postSlug) + '.html'" v-bind:title="relatedPost.postFullTitle">
                                                     <img v-bind:src="relatedPost.thumbnails[0]" class="attachment-news-thumb size-news-thumb wp-post-image">
                                                 </a>
                                             </div>
                                         </div>
-                                        <div v-bind:class="relatedPost.thumbnails.length>0?'col-md-8 col-xs-8':'col-md-12 col-xs-12'">
+                                        <div v-bind:class="relatedPost.thumbnails.length>0?'col-md-10 col-xs-10':'col-md-12 col-xs-12'">
                                             <div class="newstext">
                                                 <div class="newstexttop">
-                                                    <a v-bind:href="blogPath + 'post/' + (relatedPost.postSlug==''?relatedPost.postId:relatedPost.postSlug) + '.html'" v-bind:title="relatedPost.postTitle">
-                                                        <h3>{{ relatedPost.postTitle }}</h3>
+                                                    <a v-bind:href="blogPath + 'post/' + (relatedPost.postSlug==''?relatedPost.postId:relatedPost.postSlug) + '.html'" v-bind:title="relatedPost.postFullTitle">
+                                                        <h3>{{ relatedPost.postFullTitle }}</h3>
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="clearfix"></div>
-                                        <div class="col-md-4 col-xs-4" v-if="relatedPost.thumbnails.length>0"></div>
-                                        <div v-bind:class="relatedPost.thumbnails.length>0?'col-md-8 col-xs-8':'col-md-12 col-xs-12'">
+                                        <div class="col-md-2 col-xs-2" v-if="relatedPost.thumbnails.length>0"></div>
+                                        <div v-bind:class="relatedPost.thumbnails.length>0?'col-md-10 col-xs-10':'col-md-12 col-xs-12'">
                                             <div class="newstag">
                                                 <span><i class="fa fa-comments-o" aria-hidden="true"></i>{{ relatedPost.viewCount }}</span>
                                                 <span><i class="fa fa-clock-o" aria-hidden="true"></i>{{ relatedPost.postDate }}</span>
@@ -126,11 +113,13 @@
                         </ul>
                     </div>
                 </section>
+                <!-- 评论区域
                 <section class="mainbox">
                     <div id="comments" class="comments-area">
                         comment
-                    </div><!-- .comments-area -->
+                    </div>
                 </section>
+                -->
             </div>
             <div class="col-md-4">
                 <!--侧边栏广告一-->

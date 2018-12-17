@@ -54,6 +54,11 @@ public class Post {
     @Getter
     private String postTitle;
     /**
+     * 文章完整标题
+     */
+    @Getter
+    private String postFullTitle;
+    /**
      * 文章内容
      */
     @Getter
@@ -125,6 +130,7 @@ public class Post {
     private Integer praiseCount;
 
     public void setPostTitle(String postTitle) {
+        this.postFullTitle  = postTitle;
         this.postTitle = HtmlUtil.parseHtml(postTitle, 28);
     }
 
