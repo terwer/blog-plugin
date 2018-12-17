@@ -11,12 +11,12 @@ import com.terwergreen.plugins.blog.util.PostTypeEmum;
 import com.terwergreen.util.Constants;
 import com.terwergreen.util.RestResponse;
 import com.terwergreen.util.RestResponseStates;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,7 +47,7 @@ public class PostApi {
 
     @RequestMapping(value = "/post/list", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public String getPosts(Model model, HttpServletRequest request, HttpServletResponse response, String postType,String postStatus, String search, Integer page, Integer limit) throws Exception {
+    public String getPosts(Model model, HttpServletRequest request, HttpServletResponse response, String postType, String postStatus, String search, Integer page, Integer limit) throws Exception {
         Map resultMap = new HashMap();
 
         if (page == null) {
@@ -88,10 +88,9 @@ public class PostApi {
     @ResponseBody
     public String getHotPosts(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map resultMap = new HashMap();
-
         try {
             Map paramMap = new HashMap();
-            paramMap.put("isHot",1);
+            paramMap.put("isHot", 1);
             PageInfo<Post> posts = postService.getPostsByPage(1, 10, paramMap);
             resultMap.put("code", 0);
             resultMap.put("msg", "success");
@@ -108,7 +107,7 @@ public class PostApi {
         return JSON.toJSONString(resultMap);
     }
 
-        @RequestMapping(value = "/post/essay", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+    @RequestMapping(value = "/post/essay", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public String getEssays(Model model, HttpServletRequest request, HttpServletResponse response, Integer page, Integer limit) throws Exception {
         Map resultMap = new HashMap();
@@ -173,7 +172,7 @@ public class PostApi {
     public RestResponse newPost(Model model, HttpServletRequest request, HttpServletResponse response,
                                 Post post
     ) throws Exception {
-        RestResponse RestResponse = new RestResponse();
+        RestResponse restResponse = new RestResponse();
         try {
             //获得当前登陆用户对应的对象
             /*
@@ -196,46 +195,45 @@ public class PostApi {
             }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date dtPostDate = sdf.parse(sdf.format(new Date()));
-            if (StringUtils.isEmpty(post.getPostDate())) {
+            if (null != post.getPostDate()) {
                 post.setPostDate(dtPostDate);
             }
             if (StringUtils.isEmpty(post.getPostRawContent())) {
                 logger.error("文章信息内容不能为空");
-                RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
-                RestResponse.setMsg("文章信息内容不能为空");
+                restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                restResponse.setMsg("文章信息内容不能为空");
             }
-            logger.info("准备新增文章，文章信息：" + JSON.toJSONString(post));
+            logger.trace("准备新增文章，文章信息：" + JSON.toJSONString(post));
             Integer postId = postService.newPost(post);
             if (postId > 0) {
                 logger.info("文章信息添加成功，postId：" + postId);
                 Map<String, Object> resultMap = new HashMap<>();
                 resultMap.put("postId", postId);
-                RestResponse.setData(resultMap);
-                RestResponse.setFlag(RestResponseStates.SUCCESS.getValue());
-                RestResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
+                restResponse.setData(resultMap);
+                restResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+                restResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
             } else {
                 Map<String, Object> resultMap = new HashMap<>();
                 resultMap.put("postId", 0);
-                RestResponse.setData(resultMap);
-                RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
-                RestResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
+                restResponse.setData(resultMap);
+                restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             }
         } catch (Exception e) {
             logger.error("接口异常:error=", e);
-            RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
-            RestResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
+            restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+            restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             throw new RestException(e);
         }
-        return RestResponse;
+        return restResponse;
     }
 
     @RequestMapping(value = "/post/update", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
-    public RestResponse updatePost(Model model, HttpServletRequest request, HttpServletResponse response,
-                                   Post post) throws Exception {
+    public RestResponse updatePost(Model model, HttpServletRequest request, HttpServletResponse response, Post post) throws Exception {
         RestResponse RestResponse = new RestResponse();
         try {
-            logger.info("开始修改，Post=:" + JSON.toJSONString(post));
+            logger.trace("开始修改，Post=:" + JSON.toJSONString(post));
             boolean flag = postService.editPostById(post);
             if (flag) {
                 logger.info("文章信息修改");
@@ -257,29 +255,29 @@ public class PostApi {
     @RequestMapping(value = "/post/delete/{postId}", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public RestResponse deletePost(Model model, @PathVariable("postId") Integer postId) throws Exception {
-        RestResponse RestResponse = new RestResponse();
+        RestResponse restResponse = new RestResponse();
         try {
             boolean result = postService.deletePostById(postId);
             if (result) {
-                RestResponse.setFlag(RestResponseStates.SUCCESS.getValue());
-                RestResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
+                restResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+                restResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
             } else {
-                RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
-                RestResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
+                restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             }
         } catch (Exception e) {
             logger.error("接口异常:error=", e);
-            RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
-            RestResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
+            restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+            restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             throw new RestException(e);
         }
-        return RestResponse;
+        return restResponse;
     }
 
     @RequestMapping(value = "/post/meta/{postId}", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
     @ResponseBody
     public RestResponse updatePostMeta(Model model, @PathVariable("postId") Integer postId, String metaKey, String metaValue) throws Exception {
-        RestResponse RestResponse = new RestResponse();
+        RestResponse restResponse = new RestResponse();
         try {
             PostMeta postMeta = new PostMeta();
             postMeta.setPostId(postId);
@@ -287,18 +285,40 @@ public class PostApi {
             postMeta.setMetaValue(metaValue);
             boolean result = postService.saveOrUpdatePostMeta(postMeta);
             if (result) {
-                RestResponse.setFlag(RestResponseStates.SUCCESS.getValue());
-                RestResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
+                restResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+                restResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
             } else {
-                RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
-                RestResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
+                restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             }
         } catch (Exception e) {
             logger.error("接口异常:error=", e);
-            RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
-            RestResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
+            restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             throw new RestException(e);
         }
-        return RestResponse;
+        return restResponse;
+    }
+
+    @RequestMapping("/post/{postSlug}")
+    @ResponseBody
+    public RestResponse getPostDetail(Model model, @PathVariable String postSlug) throws RestException {
+        RestResponse restResponse = new RestResponse();
+        try {
+            Post post = null;
+            if (StringUtils.isNumeric(postSlug)) {
+                post = postService.getPostById(Integer.parseInt(postSlug));
+            } else {
+                post = postService.getPostBySlug(postSlug);
+            }
+            restResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+            restResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
+            restResponse.setData(post);
+        } catch (Exception e) {
+            logger.error("接口异常:error=", e);
+            restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+            restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
+            throw new RestException(e);
+        }
+        return restResponse;
     }
 }

@@ -66,11 +66,9 @@
                         <label class="layui-form-label">文章状态</label>
                         <div class="layui-input-block">
                             <select name="postStatus">
-                                <option value="publish" selected
-                                        th:selected="${post.postStatus==null || post.postStatus eq 'publish'}">已发布
+                                <option value="publish" selected th:selected="${post.postStatus==null || post.postStatus eq 'publish'}">已发布
                                 </option>
-                                <option value="draft"
-                                        th:selected="${post.postStatus!=null && post.postStatus eq 'draft'}">草稿
+                                <option value="draft" th:selected="${post.postStatus!=null && post.postStatus eq 'draft'}">草稿
                                 </option>
                             </select>
                         </div>
@@ -78,18 +76,13 @@
                     <div class="layui-form-item layui-form-text">
                         <label class="layui-form-label">文章内容</label>
                         <div class="layui-input-block">
-                            <textarea id="content" name="content" th:utext="${post?.postRawContent}" placeholder="请输入内容"
-                                      class="layui-textarea"></textarea>
+                            <textarea id="content" name="content" th:utext="${post?.postRawContent}" placeholder="请输入内容" class="layui-textarea"></textarea>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">发布日期</label>
                         <div class="layui-input-block">
-                            <input type="text" id="postDdate" name="postDate"
-                                   th:value="${post?.postDate==null?(#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')):(#dates.format(post.postDate, 'yyyy-MM-dd HH:mm:ss'))}"
-                                   lay-verify="datetime"
-                                   placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off"
-                                   class="layui-input">
+                            <input type="text" id="postDdate" name="postDate" th:value="${post?.postDate==null?(#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')):(#dates.format(post.postDate, 'yyyy-MM-dd HH:mm:ss'))}" lay-verify="datetime" placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-layout-admin">
@@ -257,7 +250,7 @@
                 }
                 console.log('最终的提交信息:' + JSON.stringify(data.field))
                 //提交数据到服务器
-                var postId = /*[[${postId}]]*/'/';
+                var postId = /*[[${postId}]]*/'0';
                 console.log('postId:' + postId);
                 if (postId > 0) {//修改文章
                     console.log("修改文章");

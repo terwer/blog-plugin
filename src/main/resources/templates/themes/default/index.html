@@ -41,7 +41,7 @@
                                         <div class="row">
                                             <div class="col-md-4 col-xs-4" v-if="post.thumbnails.length>0">
                                                 <div class="newsthumb">
-                                                    <a v-bind:href="blogPath + 'post/' + post.postSlug + '.html'" v-bind:title="post.postTitle" target="_blank">
+                                                    <a v-bind:href="blogPath + 'post/' + (post.postSlug==''?post.postId:post.postSlug) + '.html'" v-bind:title="post.postTitle">
                                                         <img v-bind:src="post.thumbnails[0]" class="attachment-news-thumb size-news-thumb wp-post-image">
                                                     </a>
                                                     <div class="newscatname">
@@ -56,7 +56,7 @@
                                             <div v-bind:class="post.thumbnails.length>0?'col-md-8 col-xs-8':'col-md-12 col-xs-12'">
                                                 <div class="newstext" id="newstext">
                                                     <div class="newstexttop">
-                                                        <a v-bind:href="blogPath + 'post/' + post.postSlug + '.html'" v-bind:title="post.postTitle" target="_blank">
+                                                        <a v-bind:href="blogPath + 'post/' + (post.postSlug==''?post.postId:post.postSlug) + '.html'" v-bind:title="post.postTitle">
                                                             <h3>{{ post.postTitle }}</h3>
                                                         </a>
                                                         <p class="newszy">
@@ -89,10 +89,10 @@
                         <h2>标签云</h2>
                     </div>
                     <div class="sidebarcon sidebartags">
-                        <a href="#" th:alt="@{/tag/互联网}" class="tag-cloud-link tag-link-45 tag-link-position-1" style="font-size: 13px;">互联网</a>
-                        <a href="#" th:alt="@{/tag/区块链}" class="tag-cloud-link tag-link-35 tag-link-position-3" style="font-size: 13px;">区块链</a>
-                        <a href="#" th:alt="@{/tag/美女}" class="tag-cloud-link tag-link-80 tag-link-position-8" style="font-size: 13px;">美女</a>
-                        <a href="#" th:alt="@{/tag/电影}" class="tag-cloud-link tag-link-74 tag-link-position-9" style="font-size: 13px;">电影</a>
+                        <a href="#" class="tag-cloud-link tag-link-45 tag-link-position-1" style="font-size: 13px;">互联网</a>
+                        <a href="#" class="tag-cloud-link tag-link-35 tag-link-position-3" style="font-size: 13px;">区块链</a>
+                        <a href="#" class="tag-cloud-link tag-link-80 tag-link-position-8" style="font-size: 13px;">美女</a>
+                        <a href="#" class="tag-cloud-link tag-link-74 tag-link-position-9" style="font-size: 13px;">电影</a>
                     </div>
                 </section>
                 <section class="mainbox">
@@ -105,7 +105,7 @@
                                 <div class="row">
                                     <div class="col-md-4 col-xs-4" v-if="hotPost.thumbnails.length>0">
                                         <div class="newsthumb">
-                                            <a v-bind:href="blogPath + 'post/' + hotPost.postSlug + '.html'" v-bind:title="hotPost.postTitle" target="_blank">
+                                            <a v-bind:href="blogPath + 'post/' + (hotPost.postSlug==''?hotPost.postId:hotPost.postSlug) + '.html'" v-bind:title="hotPost.postTitle">
                                                 <img v-bind:src="hotPost.thumbnails[0]" class="attachment-news-thumb size-news-thumb wp-post-image">
                                             </a>
                                         </div>
@@ -113,7 +113,7 @@
                                     <div v-bind:class="hotPost.thumbnails.length>0?'col-md-8 col-xs-8':'col-md-12 col-xs-12'">
                                         <div class="newstext">
                                             <div class="newstexttop">
-                                                <a v-bind:href="blogPath + 'post/' + hotPost.postSlug + '.html'" v-bind:title="hotPost.postTitle" target="_blank">
+                                                <a v-bind:href="blogPath + 'post/' + (hotPost.postSlug==''?hotPost.postId:hotPost.postSlug) + '.html'" v-bind:title="hotPost.postTitle">
                                                     <h3>{{ hotPost.postTitle }}</h3>
                                                 </a>
                                             </div>
