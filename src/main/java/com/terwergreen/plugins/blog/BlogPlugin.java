@@ -18,6 +18,7 @@ public class BlogPlugin extends BugucmsPlugin {
 
     public BlogPlugin(PluginWrapper wrapper) {
         super(wrapper);
+        logger.info("BlogPlugin registerBeans");
     }
 
     @Override

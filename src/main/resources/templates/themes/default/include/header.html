@@ -1,0 +1,219 @@
+<!--
+  _______
+ |__   __|
+    | |  ___  _ __ __      __ ___  _ __
+    | | / _ \| '__|\ \ /\ / // _ \| '__|
+    | ||  __/| |    \ V  V /|  __/| |
+    |_| \___||_|     \_/\_/  \___||_|
+-->
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="commonHeaderCustom(title,styles)">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title th:text="${title}"></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" th:content="${siteConfig.keywords}">
+    <meta name="description" th:content="${siteConfig.description}">
+    <link rel="icon" type="image/x-icon" th:href="@{/static/favicon.ico}">
+    <!-- layui -->
+    <link rel="stylesheet"  type="text/css" th:href="@{/webjars/layui/css/layui.css}"/>
+    <!-- font-awesome -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" media="all"/>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <!-- theme -->
+    <link rel="stylesheet" type="text/css" th:href="@{/blog/templates/themes/default/css/style.css}"/>
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <th:block th:replace="${styles}"/>
+    <script type="text/javascript" th:inline="javascript">
+        //设置项目根路径
+        window.BUGUCMS_BASE_URL = /*[[@{/}]]*/'/';
+        window.BLOG_BASE_URL = /*[[@{/blog/}]]*/'/blog/';
+        window.BLOG_API_BASE_URL = /*[[@{/api/blog/}]]*/'/api/blog/';
+        window.BLOG_THEME_PATH = /*[[@{|/blog/templates/themes/${siteConfig.webtheme}/|}]]*/'/blog/templates/themes/default/';
+
+        //====================================
+        //js字符省略显示 14-09-18 By 唐有炜
+        function shortString(s, l, tag) {
+            if (s.length > l) {
+                return s.substring(0, l) + tag;
+            } else {
+                return s;
+            }
+        }
+
+        //获取客户端时间
+        function get_client_time() {
+            var now = new Date();
+            var curr_datetime = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+            return curr_datetime;
+        }
+
+        //根据身份证返回生日
+        function get_birthday_by_idcard(StrNo) {
+            var bir;
+            switch (StrNo.length) {
+                case 15:
+                    bir = StrNo.substr(6, 2) + "-" + StrNo.substr(8, 2) + "-" + StrNo.substr(10, 2);
+                    break;
+                case 18:
+                    bir = StrNo.substr(6, 4) + "-" + StrNo.substr(10, 2) + "-" + StrNo.substr(12, 2);
+                    break;
+                default:
+                    bir = get_current_date();
+            }
+            return bir;
+        }
+
+
+        function get_current_date() {
+            var now_date = new Date();
+            var now = now_date.getFullYear() + "-" + now_date.getMonth() + "-" + now_date.getDate();
+            return now;
+        }
+
+        //根据生日获取星座
+        function get_xingzuo_by_bir(bir) {
+            var m = parseInt(bir.split("-")[1]);
+            var d = parseInt(bir.split("-")[2]);
+            var XZDict = '摩羯水瓶双鱼白羊金牛双子巨蟹狮子处女天秤天蝎射手';
+            var Zone = new Array(1222, 122, 222, 321, 421, 522, 622, 722, 822, 922, 1022, 1122);
+
+            var i = 0;
+            if (((100 * m + d) > Zone[0]) || (100 * m + d) < Zone[1]) {
+                i = 0;
+            } else {
+                for (i = 1; i < 12; i++) {
+                    if ((100 * m + d) >= Zone[i] && (100 * m + d) < Zone[i + 1]) {
+                        break;
+                    }
+                }
+            }
+            result = XZDict.substring(2 * i, 2 * i + 2) + "座";
+            return result;
+        }
+
+        //根据生日获取属相
+        function get_shuxiang_by_bir(bir) {
+            var year = bir.split("-")[0];
+            var sxnames = ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"];
+            var sx = year % 12 - 3;
+            if (sx <= 0) {
+                sx += 12;
+            }
+            //alert(sx);
+            return "属" + sxnames[sx - 1];
+        }
+    </script>
+</head>
+<body>
+<header th:fragment="commonHeaderContent">
+    <div class="modal fade" id="seacherModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div>
+            <div class="mxseacher" style="border:none;background:#fff;">
+                <div class="modal-header" style="border:none;position: absolute;right: 15px;top:0px;z-index: 9999">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                </div>
+                <div class="modal-body" style="">
+                    <form id="searchform" class="" role="search" method="get" th:action="@{/blog}">
+                        <input class="sb-search-input" placeholder="输入关键词查找..." type="text" th:value="${s}" name="s" id="s" autofocus>
+                        <input id="searchsubmit" class="sb-search-submit" type="submit" value="搜索">
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="container">
+        <div class="phone-menu">
+            <div class="style-1">
+                <div class="iphone__screen">
+                    <a th:href="@{/}" class="nav__trigger"><span class="nav__icon"></span></a>
+                    <nav class="nav">
+                        <div class="menu-nav-container">
+                            <ul id="menu-nav" class="nav__list">
+                                <li id="menu-item-4" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-4">
+                                    <a th:href="@{/}"><i class="fa fa-home"></i><span class="fontawesome-text"> 首页</span></a></li>
+                                <li id="menu-item-7" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7">
+                                    <a th:href="@{/blog/essay}"><i class="fa fa-file-text"></i><span class="fontawesome-text"> 随笔</span></a>
+                                </li>
+                                <li id="menu-item-245" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-245">
+                                    <a href="#"><i class="fa fa-file"></i><span class="fontawesome-text"> 页面</span></a>
+                                    <!-- <ul class="sub-menu">
+                                        <li id="menu-item-246" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-246"><a href="#">页面默认模板</a></li>
+                                        <li id="menu-item-244" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-244"><a href="#">页面模板01</a></li>
+                                        <li id="menu-item-243" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-243"><a href="#">页面模板02</a></li>
+                                        <li id="menu-item-330" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-330"><a href="#">标签页面</a></li>
+                                        <li id="menu-item-335" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-335"><a href="#">用户列表页</a></li>
+                                    </ul> -->
+                                </li>
+                                <li id="menu-item-71" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71">
+                                    <a href="#"><i class="fa fa-book"></i><span class="fontawesome-text"> 专题</span></a></li>
+                                <li id="menu-item-259" class="menu-item menu-item-type-taxonomy menu-item-object-album_category menu-item-259">
+                                    <a href="#"><i class="fa fa-picture-o"></i><span class="fontawesome-text"> 图集</span></a>
+                                </li>
+                                <li id="menu-item-261" class="menu-item menu-item-type-taxonomy menu-item-object-download_category menu-item-261">
+                                    <a href="#"><i class="fa fa-download"></i><span class="fontawesome-text"> 下载</span></a>
+                                </li>
+                                <li id="menu-item-247" class="menu-item menu-item-type-taxonomy menu-item-object-video_category menu-item-247">
+                                    <a href="#"><i class="fa fa-file-video-o"></i><span class="fontawesome-text"> 视频</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <h1 class="logo">
+            <a th:href="@{/}" title="terwer">
+                <img th:src="@{/blog/templates/themes/default/images/logo.png}" alt="terwer">
+            </a>
+        </h1>
+        <div class="menu">
+            <div class="menu-nav-container">
+                <ul id="menu-nav-1" class="mxmenu">
+                    <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-4">
+                        <a th:href="@{/}"><i class="fa fa-home"></i><span class="fontawesome-text"> 首页</span></a>
+                    </li>
+                    <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-7">
+                        <a th:href="@{/blog/essay}"><i class="fa fa-file-text"></i><span class="fontawesome-text"> 随笔</span></a>
+                    </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-245">
+                        <a href="#"><i class="fa fa-file"></i><span class="fontawesome-text"> 页面</span></a>
+                        <ul class="sub-menu">
+                            <!-- <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-246"><a href="#">页面默认模板</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-244"><a href="#">页面模板01</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-243"><a href="#">页面模板02</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-330"><a href="#">标签页面</a></li>
+                            <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-335"><a href="#">用户列表页</a></li> -->
+                        </ul>
+                    </li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71"><a href="#"><i class="fa fa-book"></i><span class="fontawesome-text"> 专题</span></a></li>
+                    <li class="menu-item menu-item-type-taxonomy menu-item-object-album_category menu-item-259"><a href="#"><i class="fa fa-picture-o"></i><span class="fontawesome-text"> 图集</span></a></li>
+                    <li class="menu-item menu-item-type-taxonomy menu-item-object-download_category menu-item-261"><a href="#"><i class="fa fa-download"></i><span class="fontawesome-text"> 下载</span></a></li>
+                    <li class="menu-item menu-item-type-taxonomy menu-item-object-video_category menu-item-247"><a href="#"><i class="fa fa-file-video-o"></i><span class="fontawesome-text"> 视频</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="loginlink">
+                <a data-toggle="modal" data-target="#seacherModal"><i class="fa fa-search" aria-hidden="true"></i><span class="smhidden">搜索</span></a>
+                <a class="smhidden" th:href="@{/auth/login}"><i class="fa fa-user-circle" aria-hidden="true"></i>登录</a>
+                <a class="smhidden" th:href="@{/auth/login}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>注册</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</header>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<!-- 头部 -->
+<head th:fragment="commonHeaderCustom(title,styles)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title th:text="${title} + ' - BUGUCMS管理后台'">BUGUCMS管理后台</title>
+    <script type="text/javascript" th:inline="javascript">
+        //必须在服务器运行，不能直接打开
+        /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
+        //设置项目根路径
+        window.BUGUCMS_BASE_URL = /*[[@{/}]]*/ '/';
+        window.BUGUCMS_ADMIN_PATH = /*[[${siteConfig.adminpath}]]*/'admin';
+        window.BLOG_BASE_URL = /*[[@{/blog/}]]*/'/blog/';
+        window.BLOG_API_BASE_URL = /*[[@{/api/blog/}]]*/'/api/blog/';
+        window.BLOG_THEME_PATH = /*[[@{|/blog/templates/themes/${siteConfig.webtheme}/|}]]*/'/blog/templates/themes/default/';
+    </script>
+    <!-- 头部开始 -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/layui/css/layui.css}"/>
+    <th:block th:replace="${styles}"/>
+</head>
+<body>
+<header th:fragment="commonHeaderContent">
+</header>
+
+<footer th:fragment="commonFooterCustom(scripts)">
+    <!-- 底部 -->
+    <!-- layui -->
+    <script type="text/javascript" th:src="@{/webjars/layui/layui.js}"></script>
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <!-- 自定义底部开始 -->
+    <th:block th:replace="${scripts}"/>
+    <!-- 自定义底部结束 -->
+</footer>
+</body>
+</html>

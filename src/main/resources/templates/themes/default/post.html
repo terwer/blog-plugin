@@ -1,0 +1,364 @@
+<!--
+  _______
+ |__   __|
+    | |  ___  _ __ __      __ ___  _ __
+    | | / _ \| '__|\ \ /\ / // _ \| '__|
+    | ||  __/| |    \ V  V /|  __/| |
+    |_| \___||_|     \_/\_/  \___||_|
+-->
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:include="themes/default/include/header::commonHeaderCustom('文章标题' + ' - ' + ${siteConfig.webname},~{::style})">
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<!-- 头部开始 -->
+<header th:include="themes/default/include/header::commonHeaderContent">
+</header>
+
+<!-- 正文开始 -->
+<div class="container">
+    <div class="main">
+        <div class="row">
+            <div class="col-md-8">
+                <section class="mainbox" id="post-detail">
+                    <div class="bread" v-cloak>
+                        <div class="breadcrumbs">
+                            <a itemprop="breadcrumb" th:href="@{/}"><i class="fa fa-home" aria-hidden="true"></i>首页</a>&gt;
+                            <a itemprop="breadcrumb" th:href="@{/blog}">博文</a>&gt;
+                            <a itemprop="breadcrumb" th:href="@{blog/category/science}">科技</a>&gt;
+                            <span class="active">{{ post.postTitle }}</span>
+                        </div>
+                    </div>
+                    <div class="pagecon" v-cloak>
+                        <h1 class="pagetit">{{ post.postFullTitle }}</h1>
+                        <div class="pageauthor">
+                            <a th:href="@{/blog/author/terwer}">
+                                <img alt="terwer" th:src="@{/blog/templates/themes/default/images/avatar/default.png}" class="avatar avatar-96 photo" height="96" width="96">terwer
+                            </a>
+                            <span class="smhidden"><i class="fa fa-clock-o" aria-hidden="true"></i>{{ post.postDate }}</span>
+                            <span class="smhidden"><i class="fa fa-eye" aria-hidden="true"></i> {{ post.viewCount }} 次</span>
+
+                            <span class="smhidden favorit">
+                                <a class="simplefavorite-button has-count preset" data-postid="193" data-siteid="1" data-groupid="1" data-favoritecount="0" style="box-shadow:none;-webkit-box-shadow:none;-moz-box-shadow:none;background-color:#ffffff;border-color:#ffffff;color:#999999;"><i class="sf-icon-favorite" style="color: rgb(0, 164, 255);"></i> 收藏
+                                    <span class="simplefavorite-button-count" style="color: rgb(153, 153, 153);">0</span>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="pagecontent">
+                            <p>
+                                <span v-html="post.postContent"></span>
+                            </p>
+                        </div>
+                        <div class="pagetags">
+                            <a th:href="@{/blog/tag/java}" rel="tag">java</a></div>
+                        <div class="zhuanzai">
+                            <span>本文为原创内容，作者：Terwer，转载请注明出处！</span>
+                        </div>
+                        <!-- 分享与打赏
+                        <div class="contentbottom">
+                            <div class="clearfix"></div>
+                        </div>
+                        -->
+                        <div class="prenext">
+                            <p class="pre">上一篇：<span>已是最新文章</span></p>
+                            <p class="next">下一篇：<a href="#" rel="prev">机器人汉堡店即将开业，做一个汉堡需要5分钟</a>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <!-- 广告预留
+                <div class="pagead boxshadow">
+                    <a th:href="@{/}"><img src="#"></a>
+                </div>
+                -->
+                <section class="mainbox">
+                    <div class="sidebartitle">
+                        <h2>相关文章</h2>
+                        <a th:href="@{/blog/category/java}">更多<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="row">
+                        <ul class="hotnews" id="related-post">
+                            <div class="col-md-12 col-xs-12" v-cloak>
+                                <li v-for="relatedPost in relatedPosts">
+                                    <div class="row">
+                                        <div class="col-md-2 col-xs-2" v-if="relatedPost.thumbnails.length>0">
+                                            <div class="newsthumb">
+                                                <a v-bind:href="blogPath + 'post/' + (relatedPost.postSlug==''?relatedPost.postId:relatedPost.postSlug) + '.html'" v-bind:title="relatedPost.postFullTitle">
+                                                    <img v-bind:src="relatedPost.thumbnails[0]" class="attachment-news-thumb size-news-thumb wp-post-image">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div v-bind:class="relatedPost.thumbnails.length>0?'col-md-10 col-xs-10':'col-md-12 col-xs-12'">
+                                            <div class="newstext">
+                                                <div class="newstexttop">
+                                                    <a v-bind:href="blogPath + 'post/' + (relatedPost.postSlug==''?relatedPost.postId:relatedPost.postSlug) + '.html'" v-bind:title="relatedPost.postFullTitle">
+                                                        <h3>{{ relatedPost.postFullTitle }}</h3>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-2 col-xs-2" v-if="relatedPost.thumbnails.length>0"></div>
+                                        <div v-bind:class="relatedPost.thumbnails.length>0?'col-md-10 col-xs-10':'col-md-12 col-xs-12'">
+                                            <div class="newstag">
+                                                <span><i class="fa fa-comments-o" aria-hidden="true"></i>{{ relatedPost.viewCount }}</span>
+                                                <span><i class="fa fa-clock-o" aria-hidden="true"></i>{{ relatedPost.postDate }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </section>
+                <!-- 评论区域
+                <section class="mainbox">
+                    <div id="comments" class="comments-area">
+                        comment
+                    </div>
+                </section>
+                -->
+            </div>
+            <div class="col-md-4">
+                <!--侧边栏广告一-->
+                <section class="mainbox">
+                    <div class="postauthor" style="background:#333 url(http://mxnews.zzmaixun.com/wp-content/uploads/2018/07/2018-07-2641.jpg) no-repeat center;background-size: cover;">
+                        <a class="author-avatar" th:href="@{/blog/author/terwer}">
+                            <img alt="terwer" th:src="@{/blog/templates/themes/default/images/avatar/default.png}" class="avatar avatar-96 photo"  height="96" width="96">
+                        </a>
+                    </div>
+                    <h3 class="author-name">
+                        <a th:href="@{/blog/author/terwer}">terwer</a>
+                    </h3>
+                    <p class="author-decrip">专注与服务端技术分享</p>
+                    <div class="author-count">
+                        <ul>
+                            <li>
+                                <span class="counttit">粉丝</span>
+                                <span class="conntnum">2</span>
+                            </li>
+                            <li>
+                                <span class="counttit">关注</span>
+                                <span class="conntnum">4</span>
+                            </li>
+                            <li>
+                                <span class="counttit">文章</span>
+                                <span class="conntnum">2</span>
+                            </li>
+                            <li>
+                                <span class="counttit">浏览</span>
+                                <span class="conntnum">177</span>
+                            </li>
+                            <div class="clearfix"></div>
+                        </ul>
+                    </div>
+                </section>
+                <section class="mainbox">
+                    <div class="sidebartitle">
+                        <h2>他的文章</h2>
+                    </div>
+                    <div class="sidebarcon">
+                        <section class="mainbox" id="author-post">
+                            <ul class="hotnews" v-cloak>
+                                <li v-for="authorPost in authorPosts">
+                                    <div class="row">
+                                        <div class="col-md-4 col-xs-4" v-if="authorPost.thumbnails.length>0">
+                                            <div class="newsthumb">
+                                                <a v-bind:href="blogPath + 'post/' + (authorPost.postSlug==''?authorPost.postId:authorPost.postSlug) + '.html'" v-bind:title="authorPost.postTitle">
+                                                    <img v-bind:src="authorPost.thumbnails[0]" class="attachment-news-thumb size-news-thumb wp-post-image">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div v-bind:class="authorPost.thumbnails.length>0?'col-md-8 col-xs-8':'col-md-12 col-xs-12'">
+                                            <div class="newstext">
+                                                <div class="newstexttop">
+                                                    <a v-bind:href="blogPath + 'post/' + (authorPost.postSlug==''?authorPost.postId:authorPost.postSlug) + '.html'" v-bind:title="authorPost.postTitle">
+                                                        <h3>{{ authorPost.postTitle }}</h3>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="col-md-4 col-xs-4" v-if="authorPost.thumbnails.length>0"></div>
+                                        <div v-bind:class="authorPost.thumbnails.length>0?'col-md-8 col-xs-8':'col-md-12 col-xs-12'">
+                                            <div class="newstag">
+                                                <span><i class="fa fa-comments-o" aria-hidden="true"></i>{{ authorPost.viewCount }}</span>
+                                                <span><i class="fa fa-clock-o" aria-hidden="true"></i>{{ authorPost.postDate }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </section>
+                <section class="mainbox">
+                    <div class="sidebartitle">
+                        <h2>标签云</h2>
+                    </div>
+                    <div class="sidebarcon sidebartags">
+                        <a href="#" class="tag-cloud-link tag-link-45 tag-link-position-1" style="font-size: 13px;">互联网</a>
+                        <a href="#" class="tag-cloud-link tag-link-35 tag-link-position-3" style="font-size: 13px;">区块链</a>
+                        <a href="#" class="tag-cloud-link tag-link-80 tag-link-position-8" style="font-size: 13px;">美女</a>
+                        <a href="#" class="tag-cloud-link tag-link-74 tag-link-position-9" style="font-size: 13px;">电影</a>
+                    </div>
+                </section>
+                <!-- 侧边栏广告二
+                <div class="sidebarad">
+                    <a href="@{/}"><img src="#"></a>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 底部开始 -->
+<footer th:include="themes/default/include/footer::commonFooterCustom(~{::script})">
+    <script type="text/javascript" th:inline="javascript">
+        var postId = /*[[${postId}]]*/'0';
+        layui.config({base: BUGUCMS_BASE_URL + 'static/lib/'}).extend({
+            conf: 'bugucms/conf'
+        }).use(['conf', 'layer', 'element', 'form', 'jquery', 'laytpl'], function () {
+            var $ = layui.jquery,
+                conf = layui.conf,
+                layer = layui.layer,
+                form = layui.form,
+                laytpl = layui.laytpl;
+
+            var postType = 'post';
+
+            // ==========
+            // 文章详情
+            var app = new Vue({
+                el: '#post-detail',
+                data: {
+                    post: {},
+                    blogPath: ''
+                },
+                created: function () {
+                    this.blogPath = BLOG_BASE_URL;
+                    getData();
+                }
+            });
+
+            function getData() {
+                var index = layer.load(2, {
+                    shade: [0.6, '#fff'], content: '加载中...', time: 500, success: function (layero) {
+                        layero.find('.layui-layer-content').css({
+                            'padding-top': '6px',
+                            'width': '150px',
+                            'padding-left': '40px'
+                        });
+                        layero.find('.layui-layer-ico16, .layui-layer-loading .layui-layer-loading2').css({
+                            'width': '150px !important',
+                            'background-position': '2px 0 !important'
+                        });
+                    }
+                });
+                $("#btn-loadmore").text("加载中...");
+                console.log("postId is:" + postId);
+                var postUrl = BLOG_API_BASE_URL + 'post/' + postId;//数据接口地址
+                // 如果开启token，传入token
+                if (conf.request.tokenName) {
+                    postUrl += '?tokenString=' + conf.request.tokenString;
+                }
+                console.log("postUrl:" + postUrl);
+                $.post(postUrl, {}, function (res) {
+                    if (res.status == 0) {
+                        layer.msg(res.msg, {icon: 2});
+                    } else {
+                        var result =  res.data;
+                        // console.log("post:" + JSON.stringify(res.data));
+                        document.title = result.postTitle;
+                        app.post = result;
+                    }
+                });
+            }
+
+            // ==========
+            // 相关文章
+            var relatedPostsApp = new Vue({
+                el: '#related-post',
+                data: {
+                    relatedPosts: [],
+                    blogPath: ''
+                },
+                created: function () {
+                    this.blogPath = BLOG_BASE_URL;
+                    getRelatedPostsData();
+                }
+            });
+
+            function getRelatedPostsData() {
+                var relatedPostsUrl = BLOG_API_BASE_URL + 'post/hot';//数据接口地址
+                // 如果开启token，传入token
+                if (conf.request.tokenName) {
+                    relatedPostsUrl += '?tokenString=' + conf.request.tokenString;
+                }
+                $.post(relatedPostsUrl, {
+                    postType: postType,
+                    postStatus: "publish"
+                }, function (res) {
+                    if (res.status == 0) {
+                        layer.msg(res.msg, {icon: 2});
+                    } else {
+                        // console.log("posts:" + JSON.stringify(res.data));
+                        if (res.data.length == 0) {
+                            console.log('no related post data');
+                        }
+                        // 渲染数据
+                        for (var idx in res.data) {
+                            var post = res.data[idx];
+                            relatedPostsApp.relatedPosts.push(post);
+                        }
+                    }
+                });
+            }
+
+            // ==========
+            // 作者的文章
+            var authorPostsApp = new Vue({
+                el: '#author-post',
+                data: {
+                    authorPosts: [],
+                    blogPath: ''
+                },
+                created: function () {
+                    this.blogPath = BLOG_BASE_URL;
+                    getAuthorPostsData();
+                }
+            });
+
+            function getAuthorPostsData() {
+                var authorPostsUrl = BLOG_API_BASE_URL + 'post/hot';//数据接口地址
+                // 如果开启token，传入token
+                if (conf.request.tokenName) {
+                    authorPostsUrl += '?tokenString=' + conf.request.tokenString;
+                }
+                $.post(authorPostsUrl, {
+                    postType: postType,
+                    postStatus: "publish"
+                }, function (res) {
+                    if (res.status == 0) {
+                        layer.msg(res.msg, {icon: 2});
+                    } else {
+                        // console.log("posts:" + JSON.stringify(res.data));
+                        if (res.data.length == 0) {
+                            console.log('no author post data');
+                        }
+                        // 渲染数据
+                        for (var idx in res.data) {
+                            var post = res.data[idx];
+                            authorPostsApp.authorPosts.push(post);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</footer>
+</body>
+</html>
