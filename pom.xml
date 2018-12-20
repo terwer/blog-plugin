@@ -14,9 +14,8 @@
     <parent>
         <groupId>com.terwergreen</groupId>
         <artifactId>bugucms-plugin-container</artifactId>
-        <version>2.1.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
+        <version>2.1.1</version>
+        <relativePath>../../bugucms-plugin-container/pom-parent.xml</relativePath> <!-- lookup parent from repository -->    </parent>
 
     <dependencies>
         <!-- Markdown编辑器 -->
