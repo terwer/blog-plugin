@@ -201,7 +201,7 @@ public class PostApi {
             }
             if (StringUtils.isEmpty(post.getPostRawContent())) {
                 logger.error("文章信息内容不能为空");
-                restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                restResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
                 restResponse.setMsg("文章信息内容不能为空");
             }
             logger.trace("准备新增文章，文章信息：" + JSON.toJSONString(post));
@@ -211,18 +211,18 @@ public class PostApi {
                 Map<String, Object> resultMap = new HashMap<>();
                 resultMap.put("postId", postId);
                 restResponse.setData(resultMap);
-                restResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+                restResponse.setStatus(RestResponseStates.SUCCESS.getValue());
                 restResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
             } else {
                 Map<String, Object> resultMap = new HashMap<>();
                 resultMap.put("postId", 0);
                 restResponse.setData(resultMap);
-                restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                restResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
                 restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             }
         } catch (Exception e) {
             logger.error("接口异常:error=", e);
-            restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+            restResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
             restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             throw new RestException(e);
         }
@@ -238,15 +238,15 @@ public class PostApi {
             boolean flag = postService.editPostById(post);
             if (flag) {
                 logger.info("文章信息修改");
-                RestResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+                RestResponse.setStatus(RestResponseStates.SUCCESS.getValue());
                 RestResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
             } else {
-                RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                RestResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
                 RestResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             }
         } catch (Exception e) {
             logger.error("接口异常:error=", e);
-            RestResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+            RestResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
             RestResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             throw new RestException(e);
         }
@@ -260,15 +260,15 @@ public class PostApi {
         try {
             boolean result = postService.deletePostById(postId);
             if (result) {
-                restResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+                restResponse.setStatus(RestResponseStates.SUCCESS.getValue());
                 restResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
             } else {
-                restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                restResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
                 restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             }
         } catch (Exception e) {
             logger.error("接口异常:error=", e);
-            restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+            restResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
             restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             throw new RestException(e);
         }
@@ -286,10 +286,10 @@ public class PostApi {
             postMeta.setMetaValue(metaValue);
             boolean result = postService.saveOrUpdatePostMeta(postMeta);
             if (result) {
-                restResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+                restResponse.setStatus(RestResponseStates.SUCCESS.getValue());
                 restResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
             } else {
-                restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+                restResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
                 restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             }
         } catch (Exception e) {
@@ -311,12 +311,12 @@ public class PostApi {
             } else {
                 post = postService.getPostBySlug(postSlug);
             }
-            restResponse.setFlag(RestResponseStates.SUCCESS.getValue());
+            restResponse.setStatus(RestResponseStates.SUCCESS.getValue());
             restResponse.setMsg(RestResponseStates.SUCCESS.getMsg());
             restResponse.setData(post);
         } catch (Exception e) {
             logger.error("接口异常:error=", e);
-            restResponse.setFlag(RestResponseStates.SERVER_ERROR.getValue());
+            restResponse.setStatus(RestResponseStates.SERVER_ERROR.getValue());
             restResponse.setMsg(RestResponseStates.SERVER_ERROR.getMsg());
             throw new RestException(e);
         }
