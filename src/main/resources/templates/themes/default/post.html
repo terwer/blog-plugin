@@ -14,6 +14,7 @@
 </head>
 <body>
 <!-- 头部开始 -->
+<link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/9.13.1/styles/vs.min.css">
 <header th:include="themes/default/include/header::commonHeaderContent">
 </header>
 
@@ -48,7 +49,7 @@
                         </div>
                         <div class="pagecontent">
                             <p>
-                                <span v-html="post.postContent"></span>
+                                <span v-html="markedContent"></span>
                             </p>
                         </div>
                         <div class="pagetags">
@@ -217,6 +218,9 @@
 
 <!-- 底部开始 -->
 <footer th:include="themes/default/include/footer::commonFooterCustom(~{::script})">
+    <script src="https://cdn.staticfile.org/marked/0.5.2/marked.min.js"></script>
+    <script src="https://cdn.staticfile.org/highlight.js/9.13.1/highlight.min.js"></script>
+    <script src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" th:inline="javascript">
         var postId = /*[[${postId}]]*/'0';
         layui.config({base: BUGUCMS_BASE_URL + 'static/lib/'}).extend({
@@ -230,6 +234,22 @@
 
             var postType = 'post';
 
+            // Set options
+            // `highlight` uses `highlight.js`
+            marked.setOptions({
+                highlight: function(code) {
+                    return hljs.highlightAuto(code).value;
+                },
+                pedantic: false,
+                gfm: true,
+                tables: true,
+                breaks: false,
+                sanitize: false,
+                smartLists: true,
+                smartypants: false,
+                xhtml: false
+            });
+
             // ==========
             // 文章详情
             var app = new Vue({
@@ -241,7 +261,51 @@
                 created: function () {
                     this.blogPath = BLOG_BASE_URL;
                     getData();
+                },
+                computed: {
+                    markedContent: function () {
+                        // console.log("postRawContent:" + this.post.postRawContent);
+                        if (typeof this.post.postRawContent != "undefined") {
+                            // console.log("postRawContent:" + JSON.stringify(this.post.postRawContent));
+                            // var hljResult = hljs.highlightAuto(this.post.postContent).value;
+                            // console.log("hljResult:" + JSON.stringify(hljResult));
+                            // console.log("mkResult:" + JSON.stringify(mkResult));
+                            return marked(this.post.postRawContent);
+                        }
+                    }
+                },
+                methods: {
+                    reRender() {
+                        if (window.MathJax) {
+                            console.log('rendering mathjax');
+                            MathJax.Hub.Config({
+                                tex2jax: {
+                                    inlineMath: [
+                                        ["$", "$"], ["\\(", "\\)"]
+                                    ]
+                                }
+                            });
+                            window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub], function () {
+                                console.log('mathjax done')
+                            });
+                        }
+                    }
+                },
+                mounted: function () {
+                    this.$nextTick().then(function () {
+                        app.reRender();
+                    });
                 }
+                /*
+                watch: {
+                    latex: function () {
+                        console.log('data changed');
+                        this.$nextTick().then(() = > {
+                            this.reRender();
+                        });
+                    }
+                }
+                */
             });
 
             function getData() {
