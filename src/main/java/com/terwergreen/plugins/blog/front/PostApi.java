@@ -196,7 +196,7 @@ public class PostApi {
             }
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date dtPostDate = sdf.parse(sdf.format(new Date()));
-            if (null != post.getPostDate()) {
+            if (null == post.getPostDate()) {
                 post.setPostDate(dtPostDate);
             }
             if (StringUtils.isEmpty(post.getPostRawContent())) {

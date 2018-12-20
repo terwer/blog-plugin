@@ -209,7 +209,7 @@
 
                         function doDeleteResult(res) {
                             console.log(res);
-                            if (res != null && res.flag == 1) {
+                            if (res != null && res.status === 1) {
                                 layer.msg('删除成功', {icon: 1});
                                 window.location.reload();
                                 //window.location.href = BUGUCMS_BASE_URL + BUGUCMS_ADMIN_PATH + "/?action=postManage/list&title=所有文章";

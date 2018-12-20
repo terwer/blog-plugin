@@ -269,7 +269,7 @@
                         postDate: data.field.postDate
                     }, function (res) {
                         console.log(JSON.stringify(res));
-                        if (res.flag == 1) {
+                        if (res.status == 1) {
                             layer.msg('修改成功', {icon: 1});
                             window.location.reload();
                         } else {

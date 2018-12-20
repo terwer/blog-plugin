@@ -142,7 +142,7 @@
                         postType: "essay",
                         postContent: content
                     }, function (res) {
-                        if (res.status == 0) {
+                        if (res.status === 0) {
                             layer.msg(res.msg, {icon: 2});
                         } else {
                             var postId = JSON.stringify(res.data.postId);
@@ -200,7 +200,7 @@
                                 metaKey: "praise_count",
                                 metaValue: goodCount
                             }, function (res) {
-                                if (res.status == 0) {
+                                if (res.status === 0) {
                                     layer.msg(res.msg, {icon: 2});
                                 } else {
                                     // layer.msg('点赞成功', {icon: 1});
@@ -280,11 +280,11 @@
                 }
                 console.log("essayListUrl:" + essayListUrl);
                 $.post(essayListUrl, {page: currentPage}, function (res) {
-                    if (res.status == 0) {
+                    if (res.status === 0) {
                         layer.msg(res.msg, {icon: 2});
                     } else {
                         console.log("timelines:" + JSON.stringify(res.data.timelines));
-                        if (res.data.timelines.length == 0) {
+                        if (res.data.timelines.length === 0) {
                             app.tips = '加载完成';
                         } else {
                             ++currentPage;
@@ -298,7 +298,6 @@
             }
         });
     </script>
-    </div>
 
     <script id="LAY-msg-tpl" type="text/html">
         <div class="info-box">
